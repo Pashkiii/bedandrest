@@ -1,10 +1,9 @@
-import { log } from './logger/index.js';
-import { makeCreateBookMessage } from './message/index.js';
-import { sendMessage } from './sender/index.js';
-import { Storage } from './storage/index.js';
+const { log } = require('./logger/index.js');
+const { makeCreateBookMessage } = require('./message/index.js');
+const { sendMessage } = require('./sender/index.js');
+const { Storage } = require('./storage/index.js');
 
-
-export async function createBook(data) {
+async function createBook(data) {
     try {
         const storage = new Storage();
         storage.setBook(data.id, data);
@@ -16,7 +15,7 @@ export async function createBook(data) {
     }
 }
 
-export async function updateBook(data) {
+async function updateBook(data) {
     try {
 
     } catch (err) {
@@ -24,10 +23,16 @@ export async function updateBook(data) {
     }
 }
 
-export async function deleteBook(data) {
+async function deleteBook(data) {
     try {
 
     } catch (err) {
 
     }
 }
+
+module.exports = {
+    createBook,
+    updateBook,
+    deleteBook
+};

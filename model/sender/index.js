@@ -1,5 +1,5 @@
-import fetch from 'node-fetch';
-import { log } from '../logger/index.js';
+const fetch = require('node-fetch');
+const { log } = require('../logger/index.js');
 
 class WhatsAppSender {
     constructor() {
@@ -43,10 +43,14 @@ class WhatsAppSender {
     }
 }
 
-export async function sendMessage(phone, message) {
+async function sendMessage(phone, message) {
     console.log(message);
     return;
 
     const whatsAppSender = new WhatsAppSender();
     return await whatsAppSender.send(phone, message);
 }
+
+module.exports = {
+    sendMessage
+};

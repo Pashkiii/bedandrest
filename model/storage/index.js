@@ -1,4 +1,4 @@
-export class Storage {
+class Storage {
     constructor() {
         this.storage = [];
     }
@@ -24,3 +24,7 @@ export class Storage {
         this.storage.splice(index, 1);
     }
 }
+
+module.exports = {
+    Storage
+};

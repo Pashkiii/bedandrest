@@ -1,7 +1,7 @@
-import { realtyCalendarAction } from './const.js';
-import { ParseDataError } from './exception.js';
+const { realtyCalendarAction } = require('./const.js');
+const { ParseDataError } = require('./exception.js');
 
-export function parseRCData(data) {
+function parseRCData(data) {
     if (typeof data !== 'object' || !data) {
         throw new ParseDataError('Invalid format data');
     }
@@ -87,3 +87,6 @@ function parseBooking(data) {
     };
 }
 
+module.exports = {
+    parseRCData
+};

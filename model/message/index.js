@@ -1,4 +1,4 @@
-import { extraServices } from '../const.js'
+const { extraServices } = require('../const.js');
 
 function getExtraLink(apartmentId) {
     const link = extraServices[String(apartmentId)] || null;
@@ -7,10 +7,13 @@ function getExtraLink(apartmentId) {
     return `Мы подготовили интересные предложения ${link}`;
 }
 
-export function makeCreateBookMessage(data) {
+function makeCreateBookMessage(data) {
     return `Здравствуйте!     
     У Вас запланирован заезд 01.01.2022.
     ${getExtraLink(data.apartment.id)}
     `;
 }
 
+module.exports = {
+    makeCreateBookMessage
+};

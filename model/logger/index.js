@@ -1,4 +1,4 @@
-import fs from "node:fs/promises";
+const fs = require("node:fs/promises");
 
 function getMessage(logData) {
     if (logData instanceof Error) {
@@ -8,7 +8,7 @@ function getMessage(logData) {
     return Array.isArray(logData) ? logData.join("") : logData;
 }
 
-export async function log(message) {
+async function log(message) {
     try {
         if (process.env.NODE_ENV === "development") {
             console.warn(message);
@@ -17,6 +17,7 @@ export async function log(message) {
         const d = new Date();
         const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`;
 
+        console.log(data);
         const loggerPath =
             process.env.NODE_ENV === "development"
                 ? "./log.txt"
@@ -26,3 +27,7 @@ export async function log(message) {
         console.log("Logger error", error);
     }
 }
+
+module.exports = {
+    log
+};
