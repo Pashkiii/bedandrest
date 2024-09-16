@@ -17,6 +17,10 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
         log('Action: ' + action + JSON.stringify(data));
 
+        if (data.apartment.id !== 219768) {
+            return;
+        }
+
         switch (action) {
             case (realtyCalendarAction.create):
                 await createBook(data);
