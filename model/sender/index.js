@@ -20,16 +20,25 @@ class WhatsAppSender {
                 body
             });
 
-            console.log('Response:');
-            console.log(response);
-
             if (response.ok) {
-                return await response.json();
+                return {
+                    ok: true,
+                    result: await response.json()
+                };
             }
 
+            return {
+                ok: false,
+                error: response.status
+            }
         } catch (err) {
             console.error(err);
-            log('WhatsApp send message error')
+            log('WhatsApp send message error');
+            
+            return {
+                ok: false,
+                error: err
+            };
         }
     }
 
@@ -44,11 +53,15 @@ class WhatsAppSender {
 }
 
 async function sendMessage(phone, message) {
-    console.log(message);
-    return;
+    if (process.env.NODE_ENV === 'development') {
+        console.log(phone, message);
+        return { ok: true };
+    }
 
-    const whatsAppSender = new WhatsAppSender();
-    return await whatsAppSender.send(phone, message);
+    // const whatsAppSender = new WhatsAppSender();
+    // const result = await whatsAppSender.send(phone, message);
+
+    return result;
 }
 
 module.exports = {

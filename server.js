@@ -10,6 +10,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const jsonParser = express.json();
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
         const { action, data } = parseRCData(req.body);

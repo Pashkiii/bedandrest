@@ -46,5 +46,3 @@ app.post('/api/book', jsonParser, async (req, res) => {
 app.listen(port, () => {
     console.log('Start app in port:', port);
 });
-
-module.exports = app;

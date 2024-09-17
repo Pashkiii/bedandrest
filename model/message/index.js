@@ -9,7 +9,7 @@ function getExtraLink(apartmentId) {
 
 function makeCreateBookMessage(data) {
     return `Здравствуйте!     
-    У Вас запланирован заезд 01.01.2022.
+    У Вас запланирован заезд ${data.beginDate.toLocaleDateString('ru-RU')}.
     ${getExtraLink(data.apartment.id)}
     `;
 }

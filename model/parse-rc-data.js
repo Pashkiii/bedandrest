@@ -6,7 +6,8 @@ function parseRCData(data) {
         throw new ParseDataError('Invalid format data');
     }
 
-    const { id, clientId, amount, apartment, phone, booking } = parseBooking(data.data);
+    const { id, clientId, amount, apartment, phone, beginDate,
+        endDate, booking } = parseBooking(data.data);
 
     return {
         action: parseAction(data),
@@ -15,6 +16,8 @@ function parseRCData(data) {
             clientId,
             amount,
             apartment,
+            beginDate,
+            endDate,
             phone,
             data: JSON.stringify(data.data)
         }
@@ -69,6 +72,9 @@ function parseBooking(data) {
     const clientId = booking['client_id'];
     const amount = booking['amount'];
 
+    const beginDate = new Date(booking['begin_date']);
+    const endDate = new Date(booking['end_date']);
+
     const client = booking.client;
     if (!isObject(client)) {
         throw new ParseDataError('Invalid format data. Client not found');
@@ -82,6 +88,8 @@ function parseBooking(data) {
         clientId,
         amount,
         apartment,
+        beginDate,
+        endDate,
         phone,
         booking
     };

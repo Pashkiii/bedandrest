@@ -9,7 +9,10 @@ async function createBook(data) {
         storage.setBook(data.id, data);
 
         const message = makeCreateBookMessage(data);
-        await sendMessage(data.phone, message);
+        const sendResult = await sendMessage(data.phone, message);
+        if (sendResult.ok) {
+            return;
+        }
     } catch (err) {
         log(err);
     }
