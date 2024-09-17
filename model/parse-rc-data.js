@@ -6,7 +6,7 @@ function parseRCData(data) {
         throw new ParseDataError('Invalid format data');
     }
 
-    const { id, clientId, amount, apartment, phone, beginDate,
+    const { id, clientId, clientName, amount, apartment, phone, beginDate,
         endDate, booking } = parseBooking(data.data);
 
     return {
@@ -14,6 +14,7 @@ function parseRCData(data) {
         data: {
             id,
             clientId,
+            clientName,
             amount,
             apartment,
             beginDate,
@@ -81,11 +82,13 @@ function parseBooking(data) {
     }
 
     const phone = parsePhone(client.phone);
+    const clientName = client.fio || '';
     const apartment = parseApartment(booking);
 
     return {
         id,
         clientId,
+        clientName,
         amount,
         apartment,
         beginDate,
