@@ -58,8 +58,8 @@ async function sendMessage(phone, message) {
         return { ok: true };
     }
 
-    // const whatsAppSender = new WhatsAppSender();
-    // const result = await whatsAppSender.send(phone, message);
+    const whatsAppSender = new WhatsAppSender();
+    const result = await whatsAppSender.send(phone, message);
 
     return result;
 }
