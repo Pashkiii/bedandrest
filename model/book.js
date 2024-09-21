@@ -48,7 +48,7 @@ async function createBook(book) {
         const message = makeCreateBookMessage(book);
 
         const sendResult = await sendMessage(book.phone, message);
-        if (sendResult.ok) {
+        if (!sendResult.ok) {
             return;
         }
 
