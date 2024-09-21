@@ -19,8 +19,6 @@ app.post('/api/book', jsonParser, async (req, res) => {
     try {
         const { action, data } = parseRCData(req.body);
 
-        log('Action: ' + action + JSON.stringify(data));
-
         if (data.apartment.id !== 219768) {
             return;
         }

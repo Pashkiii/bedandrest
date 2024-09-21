@@ -45,15 +45,14 @@ async function createBook(book) {
             return;
         }
 
-        const message = makeCreateBookMessage(book);
-
+        const message = makeCreateBookMessage(book);        
         const sendResult = await sendMessage(book.phone, message);
         if (!sendResult.ok) {
             return;
         }
 
         const data = {
-            id,
+            id: book.id,
             create_date: convertToPostgresTime(new Date()),
             begin_date: convertToPostgresTime(book.beginDate),
             end_date: convertToPostgresTime(book.endDate),

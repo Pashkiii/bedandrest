@@ -42,6 +42,7 @@ function isObject(obj) {
 function parseApartment(data) {
     const apartment = data.apartment;
     if (!isObject(apartment) || typeof apartment.id !== 'number' || isNaN(apartment.id)) {
+        console.log('Apartment:', data.apartment);
         const parseError = new ParseDataError('Invalid apartment data');
         parseError.name = 'InvalidApartmentError';
         throw parseError;
