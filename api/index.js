@@ -1,9 +1,12 @@
 require('dotenv').config();
 
 const { realtyCalendarAction } = require('../model/const.js');
-const { createBook, updateBook, deleteBook } = require('../model/book.js');
+const { confirmBooking, createBook, updateBook, deleteBook } = require('../model/book.js');
 const { parseRCData } = require('../model/parse-rc-data.js');
 const { log } = require('../model/logger/index.js');
+
+const cron = require('cron')
+const CronJob = cron.CronJob;
 
 const express = require('express');
 const app = express();
@@ -36,7 +39,7 @@ app.post('/api/book', jsonParser, async (req, res) => {
                 console.error('Action not found');
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
         log(JSON.stringify(error));
     } finally {
         res.sendStatus(200);
@@ -44,5 +47,14 @@ app.post('/api/book', jsonParser, async (req, res) => {
 });
 
 app.listen(port, () => {
+    const job = CronJob.from({
+        cronTime: '0 3 * * * *',
+        start: true,
+        timeZone: 'Europe/Moscow',
+        onTick: async function() {
+            await confirmBooking();
+        }
+    });
+
     console.log('Start app in port:', port);
 });

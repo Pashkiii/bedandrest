@@ -1,10 +1,42 @@
 const { log } = require('./logger/index.js');
-const { makeCreateBookMessage } = require('./message/index.js');
+const { makeCreateBookMessage, makeConfirmBookMessage } = require('./message/index.js');
 const { sendMessage } = require('./sender/index.js');
 const { Storage } = require('./storage/index.js');
+const { syncDateToMoscow } = require('./lib.js')
 
 function convertToPostgresTime(date) {
     return new Date(date.getTime() + (1000 * 60 * (-(new Date()).getTimezoneOffset()))).toISOString().replace('T', ' ').replace('Z', '');
+}
+
+async function confirmBooking() {
+    const today = new Date();
+
+    try {
+        const date = syncDateToMoscow(today);
+
+        const storage = new Storage();
+        const books = await storage.getBooksByBeginDate(date);
+
+        if (!books.length) {
+            return;
+        }
+
+        for (const book of books) {
+            try {
+                const message = makeConfirmBookMessage(book)
+                await sendMessage(book.phone, message);
+            } catch (error) {
+                console.error('Send second message error', {
+                    book,
+                    error,
+                });
+            }
+        }
+
+        await storage.deleteBooks(books.map((b) => b.id));
+    } catch (error) {
+        console.error(`Send second messages ${today} error`, error);
+    }
 }
 
 async function createBook(book) {
@@ -14,12 +46,11 @@ async function createBook(book) {
         }
 
         const message = makeCreateBookMessage(book);
-        console.log(message);
 
-        // const sendResult = await sendMessage(book.phone, message);
-        // if (sendResult.ok) {
-        //     return;
-        // }
+        const sendResult = await sendMessage(book.phone, message);
+        if (sendResult.ok) {
+            return;
+        }
 
         const data = {
             id,
@@ -62,6 +93,7 @@ async function deleteBook(data) {
 }
 
 module.exports = {
+    confirmBooking,
     createBook,
     updateBook,
     deleteBook

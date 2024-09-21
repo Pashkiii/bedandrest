@@ -15,12 +15,9 @@ class Storage {
                 .from(tableName)
                 .insert(data);
 
-            console.log('Supabase insert row status:', status);
-
             if (error) {
                 console.error('Supabase insert row return error', error);
             }
-
         } catch (error) {
             console.log('Connection to Supabase error', error);
         }
@@ -32,8 +29,6 @@ class Storage {
                 .from(tableName)
                 .update(data)
                 .eq('id', id);
-
-            console.log('Supabase update row status:', status);
 
             if (error) {
                 console.error('Supabase update row error', error);
@@ -49,10 +44,45 @@ class Storage {
             .delete()
             .eq('id', id);
 
-        console.log('Supabase delete response status', response.status);
-
         if (response.error) {
             console.error('Supabase return error when delete row', response.error);
+        }
+    }
+
+    async deleteBooks(ids) {
+        try {
+            const { error, status } = await supabase
+                .from(tableName)
+                .delete()
+                .in('id', ids);
+
+            if (error) {
+                console.error('Supabase delete many return error', error);
+            }
+        } catch (error) {
+            console.error('Supabase delete many error', error);
+        }
+    }
+
+    async getBooksByBeginDate(date) {
+        try {
+            const nextDay = new Date(date);
+            nextDay.setDate(nextDay.getDate() + 1);
+
+            const { error, count, data, status } = await supabase
+                .from(tableName)
+                .select()
+                .lt('begin_date', nextDay.toISOString().split('T')[0]);
+
+            if (error) {
+                console.error('Supabase filter return error', error);
+                return [];
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Supabase filter error', error);
+            return [];
         }
     }
 }
