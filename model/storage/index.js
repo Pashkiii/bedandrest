@@ -75,7 +75,7 @@ class Storage {
                 .lt('begin_date', nextDay.toISOString().split('T')[0]);
 
             if (error) {
-                console.error('Supabase filter return error', error);
+                console.error(`Supabase filter return error for date="${nextDay.toISOString().split('T')[0]}"`, error);
                 return [];
             }
 

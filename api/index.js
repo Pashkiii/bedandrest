@@ -46,11 +46,11 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
 app.listen(port, () => {
     const job = CronJob.from({
-        cronTime: '0 18 * * * *',
+        cronTime: '10 18 * * * *',
         start: true,
         timeZone: 'Europe/Moscow',
         onTick: async function() {
-            console.log('Tick start');
+            console.error('Tick start');
             await confirmBooking();
         }
     });
