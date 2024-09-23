@@ -1,12 +1,10 @@
 require('dotenv').config();
 
+const cron = require('node-cron');
 const { realtyCalendarAction } = require('../model/const.js');
 const { confirmBooking, createBook, updateBook, deleteBook } = require('../model/book.js');
 const { parseRCData } = require('../model/parse-rc-data.js');
 const { log } = require('../model/logger/index.js');
-
-const cron = require('cron')
-const CronJob = cron.CronJob;
 
 const express = require('express');
 const app = express();
@@ -44,16 +42,17 @@ app.post('/api/book', jsonParser, async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    const job = CronJob.from({
-        cronTime: '10 18 * * * *',
-        start: true,
-        timeZone: 'Europe/Moscow',
-        onTick: async function() {
-            console.error('Tick start');
-            await confirmBooking();
-        }
-    });
-
+app.listen(port, async () => {
     console.log('Start app in port:', port);
+});
+
+cron.schedule('38 21 * * *', async () => {
+    try {
+        await log('Tick start');
+        await confirmBooking();
+    } catch (error) {
+        log(['Start job error', error]);
+    }
+}, {
+    timezone: 'Europe/Moscow',
 });

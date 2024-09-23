@@ -14,7 +14,7 @@ async function confirmBooking() {
     try {
         const date = syncDateToMoscow(today);
 
-        console.log('Date',today.toUTCString());
+        await log('Date',today.toUTCString());
 
         const storage = new Storage();
         const books = await storage.getBooksByBeginDate(date);
@@ -28,7 +28,7 @@ async function confirmBooking() {
                 const message = makeConfirmBookMessage(book)
                 await sendMessage(book.phone, message);
             } catch (error) {
-                console.error('Send second message error', {
+                log('Send second message error', {
                     book,
                     error,
                 });
@@ -37,7 +37,7 @@ async function confirmBooking() {
 
         await storage.deleteBooks(books.map((b) => b.id));
     } catch (error) {
-        console.error(`Send second messages ${today} error`, error);
+        log(`Send second messages ${today} error`, error);
     }
 }
 
