@@ -14,6 +14,8 @@ async function confirmBooking() {
     try {
         const date = syncDateToMoscow(today);
 
+        console.log('Date',today.toUTCString());
+
         const storage = new Storage();
         const books = await storage.getBooksByBeginDate(date);
 
