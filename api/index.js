@@ -1,15 +1,18 @@
 require('dotenv').config();
 
-const cron = require('node-cron');
 const { realtyCalendarAction } = require('../model/const.js');
-const { confirmBooking, createBook, updateBook, deleteBook } = require('../model/book.js');
+const { createBook, updateBook, deleteBook } = require('../model/book.js');
 const { parseRCData } = require('../model/parse-rc-data.js');
 const { log } = require('../model/logger/index.js');
+const { ParseDataError } = require('../model/exception.js');
+const favicon = require('serve-favicon');
 
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const jsonParser = express.json();
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
@@ -36,7 +39,12 @@ app.post('/api/book', jsonParser, async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        log(JSON.stringify(error));
+
+        if (error instanceof ParseDataError) {
+            await log(["ParseDataError", JSON.stringify(req.body), JSON.stringify(error)]);
+        } else {
+            await log(JSON.stringify(error));
+        }
     } finally {
         res.sendStatus(200);
     }
@@ -44,15 +52,4 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
 app.listen(port, async () => {
     console.log('Start app in port:', port);
-});
-
-cron.schedule('38 21 * * *', async () => {
-    try {
-        await log('Tick start');
-        await confirmBooking();
-    } catch (error) {
-        log(['Start job error', error]);
-    }
-}, {
-    timezone: 'Europe/Moscow',
 });
