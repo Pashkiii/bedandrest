@@ -7,11 +7,13 @@ function parseRCData(data) {
         throw new ParseDataError('Invalid format data');
     }
 
+    const action = parseAction(data);
+
     const { id, clientId, clientName, amount, apartment, phone, beginDate,
-        endDate, booking } = parseBooking(data.data);
+        endDate, booking } = parseBooking(data.data, action);
 
     return {
-        action: parseAction(data),
+        action,
         data: {
             id,
             clientId,
@@ -64,7 +66,7 @@ function parsePhone(phoneStr = '') {
     return matches.join('');
 }
 
-function parseBooking(data) {
+function parseBooking(data, action) {
     if (!isObject(data) || !('booking' in data) || !isObject(data.booking)) {
         throw new ParseDataError('Invalid format data. Booking not found');
     }
@@ -85,7 +87,7 @@ function parseBooking(data) {
 
     const phone = parsePhone(client.phone);
     const clientName = client.fio || '';
-    const apartment = parseApartment(booking);
+    const apartment = action === realtyCalendarAction.delete ? null : parseApartment(booking);
 
     return {
         id,

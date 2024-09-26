@@ -5,14 +5,11 @@ const { createBook, updateBook, deleteBook } = require('../model/book.js');
 const { parseRCData } = require('../model/parse-rc-data.js');
 const { log } = require('../model/logger/index.js');
 const { ParseDataError } = require('../model/exception.js');
-const favicon = require('serve-favicon');
 
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const jsonParser = express.json();
-
-app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
