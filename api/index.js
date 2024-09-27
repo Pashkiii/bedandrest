@@ -13,11 +13,25 @@ const jsonParser = express.json();
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
+const permittedApartments = [
+    31629,
+    31618,
+    193112,
+    72654,
+    155176,
+    219768
+];
+
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
         const { action, data } = parseRCData(req.body);
 
-        if (data.apartment.id !== 219768) {
+        if (action === realtyCalendarAction.delete) {
+            await deleteBook(data);
+            return;
+        }
+
+        if (!permittedApartments.includes(data.apartment.id)) {
             return;
         }
 
@@ -27,9 +41,6 @@ app.post('/api/book', jsonParser, async (req, res) => {
                 break;
             case realtyCalendarAction.update:
                 await updateBook(data);
-                break;
-            case realtyCalendarAction.delete:
-                await deleteBook(data);
                 break;
             default:
                 console.error('Action not found');
