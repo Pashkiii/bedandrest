@@ -1,5 +1,6 @@
 const { log } = require('./logger/index.js');
-const { makeCreateBookMessage, makeConfirmBookMessage } = require('./message/index.js');
+const { ConfirmBookMessageCreator } = require('./message/confirmBookMessageCreator.js');
+const { CreateBookMessageCreator } = require('./message/createBookMessageCreator.js');
 const { sendMessage } = require('./sender/index.js');
 const { Storage } = require('./storage/index.js');
 const { syncDateToMoscow } = require('./lib.js')
@@ -25,7 +26,8 @@ async function confirmBooking() {
 
         for (const book of books) {
             try {
-                const message = makeConfirmBookMessage(book)
+                const messageCreator = new ConfirmBookMessageCreator(book);
+                const message = messageCreator.makeMessage()
                 await sendMessage(book.phone, message);
             } catch (error) {
                 log('Send second message error', {
@@ -47,7 +49,8 @@ async function createBook(book) {
             return;
         }
 
-        const message = makeCreateBookMessage(book);        
+        const messageCreator = new CreateBookMessageCreator(book);
+        const message = messageCreator.makeMessage();        
         const sendResult = await sendMessage(book.phone, message);
         if (!sendResult.ok) {
             return;
