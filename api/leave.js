@@ -1,9 +1,11 @@
-const { confirmBooking } = require('../model/book.js');
+require('dotenv').config();
+
+const { leaveBook } = require('../model/book.js');
 const { log } = require('../model/logger/index.js');
 
 export async function GET(request) {
     try {
-        await confirmBooking();
+        await leaveBook();
     } catch (error) {
         await log(['Start job error', error]);
     }

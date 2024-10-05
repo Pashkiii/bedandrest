@@ -1,4 +1,5 @@
 const supabaseJs = require('@supabase/supabase-js');
+const { convertDateToUtcTimezone } = require('../lib.js');
 
 const supabase = supabaseJs.createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
@@ -38,6 +39,22 @@ class Storage {
         }
     }
 
+    async setSecondMessageSended(bookIds) {
+        const data = bookIds.map((id) => ({
+            id,
+            'second_message_sended': true
+        }));
+
+        try {
+            const { error, status } = await supabase
+                .from(tableName)
+                .upsert(data)
+                .select();
+        } catch (error) {
+            console.error('Supabase. Update second message flag');
+        }
+    }
+
     async deleteBook(id) {
         const response = await supabase
             .from(tableName)
@@ -66,22 +83,41 @@ class Storage {
 
     async getBooksByBeginDate(date) {
         try {
-            const nextDay = new Date(date);
-            nextDay.setDate(nextDay.getDate() + 1);
+            const beginDate = convertDateToUtcTimezone(date);
 
             const { error, count, data, status } = await supabase
                 .from(tableName)
                 .select()
-                .lt('begin_date', nextDay.toISOString().split('T')[0]);
+                .lt('begin_date', beginDate);
 
             if (error) {
-                console.error(`Supabase filter return error for date="${nextDay.toISOString().split('T')[0]}"`, error);
+                console.error(`Supabase filter return error for date="${beginDate}"`, error);
                 return [];
             }
 
             return data;
         } catch (error) {
             console.error('Supabase filter error', error);
+            return [];
+        }
+    }
+
+    async getBooksByEndDate(date) {
+        try {
+            const endDate = convertDateToUtcTimezone(date);
+            const { error, count, data, status } = await supabase
+                .from(tableName)
+                .select()
+                .eq('end_date', endDate);
+
+            if (error) {
+                console.error(`Supabase filter (end_date) return error for date="${endDate}"`, error);
+                return [];
+            }
+
+            return data.filter((x) => x['client_name'] === 'Stepan');
+        } catch (error) {
+            console.error('Supabase filter by end error', error);
             return [];
         }
     }

@@ -4,6 +4,8 @@ const realtyCalendarAction = {
     delete: 'delete_booking'
 };
 
+const BRAND = 'BedAndRest';
+
 const extraServices = {
     /** @description Островского ул., д. 75/1 */
     '31629': 'https://app.touchh.ru/kak-doma-welcome-4/?utm_medium=qr-1&utm_content=kak-doma&utm_term=%D0%9E%D1%81%D1%82%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C75-1',
@@ -67,6 +69,7 @@ const extraServices = {
 };
 
 module.exports = {
+    BRAND,
     extraServices,
     realtyCalendarAction,
 };
