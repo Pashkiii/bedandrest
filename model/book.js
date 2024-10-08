@@ -1,16 +1,16 @@
-const { log } = require('./logger/index.js');
-const { ConfirmBookMessageCreator } = require('./message/confirmBookMessageCreator.js');
-const { CreateBookMessageCreator } = require('./message/createBookMessageCreator.js');
-const { LeaveMessageCreator } = require('./message/leaveMessageCreator.js');
-const { sendMessage } = require('./sender/index.js');
-const { Storage } = require('./storage/index.js');
-const { syncDateToMoscow } = require('./lib.js')
+import { log } from './logger/index.js';
+import { ConfirmBookMessageCreator } from './message/confirmBookMessageCreator.js';
+import { CreateBookMessageCreator } from './message/createBookMessageCreator.js';
+import { LeaveMessageCreator } from './message/leaveMessageCreator.js';
+import { sendMessage } from './sender/index.js';
+import { Storage } from './storage/index.js';
+import { syncDateToMoscow } from './lib.js';
 
 function convertToPostgresTime(date) {
     return new Date(date.getTime() + (1000 * 60 * (-(new Date()).getTimezoneOffset()))).toISOString().replace('T', ' ').replace('Z', '');
 }
 
-async function confirmBooking() {
+export async function confirmBooking() {
     const today = new Date();
 
     try {
@@ -46,7 +46,7 @@ async function confirmBooking() {
     }
 }
 
-async function leaveBook() {
+export async function leaveBook() {
     const today = new Date();
 
     try {
@@ -77,7 +77,7 @@ async function leaveBook() {
     }
 }
 
-async function createBook(book) {
+export async function createBook(book) {
     try {
         if (!book.phone || !book.beginDate) {
             return;
@@ -111,7 +111,7 @@ async function createBook(book) {
     }
 }
 
-async function updateBook(book) {
+export async function updateBook(book) {
     const data = {
         begin_date: convertToPostgresTime(book.beginDate),
         end_date: convertToPostgresTime(book.endDate),
@@ -125,15 +125,7 @@ async function updateBook(book) {
     await storage.updateBook(book.id, data);
 }
 
-async function deleteBook(data) {
+export async function deleteBook(data) {
     const storage = new Storage();
     await storage.deleteBook(data.id);
 }
-
-module.exports = {
-    confirmBooking,
-    createBook,
-    updateBook,
-    deleteBook,
-    leaveBook
-};

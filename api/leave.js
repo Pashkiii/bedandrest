@@ -1,7 +1,8 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+import { leaveBook } from '../model/book.js';
+import { log } from '../model/logger/index.js';
 
-const { leaveBook } = require('../model/book.js');
-const { log } = require('../model/logger/index.js');
+dotenv.config();
 
 export async function GET(request) {
     try {

@@ -1,4 +1,4 @@
-function syncDateToMoscow(date = new Date) {
+export function syncDateToMoscow(date = new Date) {
     return new Date(
         (typeof date === "string" ? new Date(date) : date).toLocaleString(
             "en-US",
@@ -7,13 +7,8 @@ function syncDateToMoscow(date = new Date) {
     );
 }
 
-function convertDateToUtcTimezone(date) {
+export function convertDateToUtcTimezone(date) {
     const d = new Date(date);
     
     return `${d.toISOString().split('T')[0]} 00:00:00+00`;
-}
-
-module.exports = {
-    syncDateToMoscow,
-    convertDateToUtcTimezone
 }

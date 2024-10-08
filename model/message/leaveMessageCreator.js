@@ -1,6 +1,6 @@
-const { BRAND } = require('../const');
+import { BRAND } from '../const';
 
-class LeaveMessageCreator {
+export class LeaveMessageCreator {
     constructor(data) {
         this.data = data;
     }
@@ -25,7 +25,3 @@ class LeaveMessageCreator {
         return message;
     }
 }
-
-module.exports = {
-    LeaveMessageCreator
-};

@@ -1,5 +1,8 @@
-const { confirmBooking } = require('../model/book.js');
-const { log } = require('../model/logger/index.js');
+import dotenv from 'dotenv';
+import { confirmBooking } from '../model/book.js';
+import { log } from '../model/logger/index.js';
+
+dotenv.config();
 
 export async function GET(request) {
     try {

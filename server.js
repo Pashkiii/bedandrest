@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const { realtyCalendarAction } = require('./model/const.js');
-const { createBook, updateBook, deleteBook } = require('./model/book.js');
-const { parseRCData } = require('./model/parse-rc-data.js');
+const { createBook, updateBook, deleteBook } = require('./model/book.js').default;
+const { parseRCData } = require('./model/parse-rc-data.js').default;
 const { log } = require('./model/logger/index.js');
 
 const express = require('express');

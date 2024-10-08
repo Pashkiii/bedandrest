@@ -1,6 +1,6 @@
-const supabaseJs = require('@supabase/supabase-js');
-const supabase = supabaseJs.createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+import { createClient } from '@supabase/supabase-js';
 
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const tableName = 'log';
 
 async function insertLog(message) {
@@ -27,7 +27,7 @@ function getMessage(logData) {
     return Array.isArray(logData) ? logData.join("") : logData;
 }
 
-async function log(message) {
+export async function log(message) {
     try {
         const d = new Date();
         const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`;
@@ -36,7 +36,3 @@ async function log(message) {
         console.log("Logger error", error);
     }
 }
-
-module.exports = {
-    log
-};

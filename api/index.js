@@ -1,15 +1,17 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+import { realtyCalendarAction } from '../model/const.js';
+import { createBook, updateBook, deleteBook } from '../model/book.js';
+import { parseRCData } from '../model/parse-rc-data.js';
+import { log } from '../model/logger/index.js';
+import { ParseDataError } from '../model/exception.js';
 
-const { realtyCalendarAction } = require('../model/const.js');
-const { createBook, updateBook, deleteBook } = require('../model/book.js');
-const { parseRCData } = require('../model/parse-rc-data.js');
-const { log } = require('../model/logger/index.js');
-const { ParseDataError } = require('../model/exception.js');
+import express, { json } from 'express';
 
-const express = require('express');
+dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 3000;
-const jsonParser = express.json();
+const jsonParser = json();
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 

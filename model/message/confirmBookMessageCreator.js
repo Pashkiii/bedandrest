@@ -1,4 +1,4 @@
-class ConfirmBookMessageCreator {
+export class ConfirmBookMessageCreator {
     constructor(data) {
         this.data = data;
     }
@@ -37,7 +37,3 @@ class ConfirmBookMessageCreator {
     `;
     }
 }
-
-module.exports = {
-    ConfirmBookMessageCreator
-};

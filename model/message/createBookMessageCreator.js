@@ -1,6 +1,6 @@
-const { extraServices } = require('../const.js');
+import { extraServices } from '../const.js';
 
-class CreateBookMessageCreator {
+export class CreateBookMessageCreator {
     constructor(data) {
         this.apartment = data.apartment;
         this.beginDate = data.beginDate.toLocaleDateString('ru-RU', {
@@ -46,7 +46,3 @@ ${this.makeExtraServicesBlock()}
     `;
     }
 }
-
-module.exports = {
-    CreateBookMessageCreator
-};

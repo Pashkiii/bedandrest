@@ -1,11 +1,11 @@
-const supabaseJs = require('@supabase/supabase-js');
-const { convertDateToUtcTimezone } = require('../lib.js');
+import { createClient } from '@supabase/supabase-js';
+import { convertDateToUtcTimezone } from '../lib.js';
 
-const supabase = supabaseJs.createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 const tableName = 'barbook';
 
-class Storage {
+export class Storage {
     constructor() {
         this.storage = [];
     }
@@ -122,7 +122,3 @@ class Storage {
         }
     }
 }
-
-module.exports = {
-    Storage
-};
