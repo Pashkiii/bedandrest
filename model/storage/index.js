@@ -88,7 +88,7 @@ class Storage {
             const { error, count, data, status } = await supabase
                 .from(tableName)
                 .select()
-                .lt('begin_date', beginDate);
+                .eq('begin_date', beginDate);
 
             if (error) {
                 console.error(`Supabase filter return error for date="${beginDate}"`, error);
