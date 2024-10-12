@@ -34,7 +34,7 @@ class WhatsAppSender {
         } catch (err) {
             console.error(err);
             log('WhatsApp send message error');
-            
+
             return {
                 ok: false,
                 error: err

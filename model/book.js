@@ -3,6 +3,7 @@ import { ConfirmBookMessageCreator } from './message/confirmBookMessageCreator.j
 import { CreateBookMessageCreator } from './message/createBookMessageCreator.js';
 import { LeaveMessageCreator } from './message/leaveMessageCreator.js';
 import { sendMessage } from './sender/index.js';
+import { createContractService } from './service/create-contract.service.js';
 import { Storage } from './storage/index.js';
 import { syncDateToMoscow } from './lib.js';
 
@@ -27,7 +28,17 @@ export async function confirmBooking() {
 
         for (const book of books) {
             try {
-                const messageCreator = new ConfirmBookMessageCreator(book);
+                const contractLink = await createContractService(book);
+                console.log(contractLink);
+
+                if (!contractLink){
+                    continue;
+                }
+
+                const messageCreator = new ConfirmBookMessageCreator({ 
+                    book,
+                    contractLink
+                });
                 const message = messageCreator.makeMessage();
                 await sendMessage(book.phone, message);
 
@@ -52,9 +63,6 @@ export async function leaveBook() {
     try {
         const storage = new Storage();
         const books = await storage.getBooksByEndDate(today);
-
-        console.log("Books:");
-        console.log(books);
 
         if (books.length === 0) return;
 

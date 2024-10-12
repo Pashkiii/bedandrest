@@ -8,3 +8,4 @@ node_modules
 log.txt
 data
 index.js.LICENSE.txt
+server.js

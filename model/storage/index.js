@@ -115,7 +115,7 @@ export class Storage {
                 return [];
             }
 
-            return data.filter((x) => x['client_name'] === 'Stepan');
+            return data;
         } catch (error) {
             console.error('Supabase filter by end error', error);
             return [];
