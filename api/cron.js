@@ -8,7 +8,7 @@ export async function GET(request) {
     try {
         await confirmBooking();
     } catch (error) {
-        await log(['Start job error', error]);
+        await log(['Start job error', JSON.stringify(error)].join(' '));
     }
     return new Response(`Hello from ${process.env.VERCEL_REGION}`);
 }

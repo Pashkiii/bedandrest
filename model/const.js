@@ -282,8 +282,8 @@ export const apartmentData = new Map([
         inHour: 13,
         outHour: 15,
         deposit: 3000
-    },
-    219768. {
+    }],
+    [219768, {
         address: 'ул. Тестовая д. 1 кв. 100',
         id: 219768,
         linenCount: 6,
@@ -291,11 +291,7 @@ export const apartmentData = new Map([
         outHour: 15,
         deposit: 3000
     }],
-])
-
-
-
-
+]);
 
 export const extraServices = {
     /** @description Островского ул., д. 75/1 */
