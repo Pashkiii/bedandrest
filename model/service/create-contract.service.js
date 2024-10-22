@@ -35,6 +35,7 @@ function convertToContractData(book) {
             getAmount(book),
             getPricePerDay(book),
             getLinenCount(apartment),
+            getLinkOnThings(apartment),
         ]
     };
 }
@@ -87,4 +88,8 @@ function getPricePerDay(book) {
 
 function getLinenCount(apartment) {
     return createEntity('Количество комплектов белья', apartment.linenCount);
+}
+
+function getLinkOnThings(apartment) {
+    return createEntity('Ссылка на фотографии', apartment.thingsLink);
 }
