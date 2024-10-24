@@ -15,14 +15,6 @@ const jsonParser = json();
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
-const permittedApartments = [
-    31629,
-    31618,
-    193112,
-    72654,
-    155176,
-    219768
-];
 
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
@@ -30,10 +22,6 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
         if (action === realtyCalendarAction.delete) {
             await deleteBook(data);
-            return;
-        }
-
-        if (!permittedApartments.includes(data.apartment.id)) {
             return;
         }
 
