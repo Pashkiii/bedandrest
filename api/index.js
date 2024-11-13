@@ -18,7 +18,11 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
-        const { action, data } = parseRCData(req.body);
+        const { action, statusCd, data } = parseRCData(req.body);
+
+        if (statusCd !== 5) {
+            return;
+        }
 
         if (action === realtyCalendarAction.delete) {
             await deleteBook(data);

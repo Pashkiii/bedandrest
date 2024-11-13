@@ -9,11 +9,22 @@ export function parseRCData(data) {
 
     const action = parseAction(data);
 
-    const { id, clientId, clientName, amount, apartment, phone, beginDate,
-        endDate, booking } = parseBooking(data.data, action);
+    const { 
+        id, 
+        clientId, 
+        clientName, 
+        amount, 
+        apartment, 
+        phone, 
+        beginDate,
+        endDate, 
+        booking,
+        statusCd 
+    } = parseBooking(data.data, action);
 
     return {
         action,
+        statusCd,
         data: {
             id,
             clientId,
@@ -79,6 +90,7 @@ function parseBooking(data, action) {
 
     const beginDate = new Date(booking['begin_date']);
     const endDate = new Date(booking['end_date']);
+    const statusCd = parseInt(booking['status_cd'], 10);
 
     const client = booking.client;
     if (!isObject(client)) {
@@ -98,6 +110,7 @@ function parseBooking(data, action) {
         beginDate,
         endDate,
         phone,
-        booking
+        booking,
+        statusCd,
     };
 }
