@@ -22,7 +22,7 @@ app.post('/api/book', jsonParser, async (req, res) => {
     try {
         const realtyCalendarData = parseRCData(req.body);
 
-        void log(`Requerst from ${req.url}, ${JSON.stringify(req.headers)}. Data: ${JSON.stringify(realtyCalendarData)}`);
+        void log(`Request from ${req.url}, ${JSON.stringify(req.headers)}. Data: ${JSON.stringify(realtyCalendarData)}`);
 
         if (!realtyCalendarData) {
             res.sendStatus(200);

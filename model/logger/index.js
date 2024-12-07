@@ -28,9 +28,15 @@ function getMessage(logData) {
 }
 
 export async function log(message) {
+    const d = new Date();
+    const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`;
+
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`);
+        return;
+    }
+
     try {
-        const d = new Date();
-        const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`;
         await insertLog(data);
     } catch (error) {
         console.log("Logger error", error);

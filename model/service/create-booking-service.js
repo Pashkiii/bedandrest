@@ -31,7 +31,7 @@ export class CreateBookingService {
                 phone: book.phone,
                 first_message_sended: true,
                 second_message_sended: false,
-                data: book.data,
+                data: JSON.stringify(book.data),
             };
 
             if (this.#compareDate(book.beginDate, today)) {
@@ -39,10 +39,10 @@ export class CreateBookingService {
                 data.second_message_sended = true;
             }
 
-            await DB.setBook(book);
+            await DB.setBook(data);
         } catch (error) {
             console.error('Create booking error', error);
-            log(`CreateBookingService. Create booking error: ${JSON.stringify(error)}`);
+            log(`CreateBookingService. Create booking error: ${JSON.stringify(error)}. Error message: ${error?.message}`);
         }
     }
 
@@ -57,9 +57,6 @@ export class CreateBookingService {
             contractLink
         })).makeMessage();
         await sendMessage(book.phone, message);
-        if (!sendResult.ok) {
-            log(`Send confirm message error: ${JSON.stringify(sendResult)}. CreateBookingService.SendConfirmMessage`);
-        }
     }
 
     /**

@@ -23,6 +23,8 @@ export class WhatsAppSender {
 
             if (response.ok) {
                 return await response.json();
+            } else {
+                await log(`ERROR. WhatsApp send message error. Response ${JSON.stringify(await response.json())}`);
             }
 
             throw new SenderError('Message do\'t sended to WhatsApp', response.status);
