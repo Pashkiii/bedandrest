@@ -64,6 +64,10 @@ export async function confirmBooking(book) {
     }
 }
 
+const leaveMessageApartmentBlackList = [
+    139457
+];
+
 export async function leaveBook() {
     const today = new Date();
 
@@ -75,6 +79,12 @@ export async function leaveBook() {
 
         for (const book of books) {
             try {
+                if (leaveMessageApartmentBlackList.includes(book['apartment_id'])) {
+                    continue;
+                }
+
+                await log(`INFO. Leave booking: ${JSON.stringify(book)}`);
+
                 const messageCreator = new LeaveMessageCreator(book);
                 const message = messageCreator.makeMessage();
 
