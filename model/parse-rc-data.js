@@ -3,6 +3,8 @@ import { ParseDataError } from './exception.js';
 import { log } from './logger/index.js';
 
 export function parseRCData(data) {
+    void log(`Parse RealtyCalendar data: ${JSON.stringify(data)}`)
+
     if (typeof data !== 'object' || !data) {
         throw new ParseDataError('Invalid format data');
     }

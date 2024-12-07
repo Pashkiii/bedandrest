@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { realtyCalendarAction } from '../model/const.js';
-import { updateBook, deleteBook } from '../model/book.js';
+import { updateBook } from '../model/book.js';
 import { parseRCData } from '../model/parse-rc-data.js';
 import { log } from '../model/logger/index.js';
 import { ParseDataError } from '../model/exception.js';
@@ -56,7 +56,7 @@ app.post('/api/book', jsonParser, async (req, res) => {
         if (error instanceof ParseDataError) {
             await log(`ParseDataError:${JSON.stringify(error)},message: ${error.message}.Data:${JSON.stringify(req.body)}`);
         } else {
-            await log(JSON.stringify(error));
+            await log(`/api/book/ error: ${JSON.stringify(error)}`);
         }
     } finally {
         res.sendStatus(200);
