@@ -10,10 +10,7 @@ export function parseRCData(data) {
     }
 
     const action = parseAction(data);
-    if (!Object.values(realtyCalendarAction).includes(action)) {
-        throw new ParseDataError('Invalid action');
-    }
-
+    
     const { 
         id, 
         clientId, 
@@ -26,6 +23,22 @@ export function parseRCData(data) {
         booking,
         statusCd 
     } = parseBooking(data.data, action);
+
+    void log(`RealtyParcel result: ${JSON.stringify({
+        action,
+        statusCd,
+        data: {
+            id,
+            clientId,
+            clientName,
+            amount,
+            apartment,
+            beginDate,
+            endDate,
+            phone,
+            data: JSON.stringify(data.data)
+        }
+    })}`);
 
     return {
         action,
@@ -51,7 +64,7 @@ function parseAction(data) {
         return action;
     }
 
-    throw new ParseDataError('Invalid format data. Action not found');
+    throw new ParseDataError(`Invalid format data. Action ${action} not found`);
 }
 
 function isObject(obj) {
