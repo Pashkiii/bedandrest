@@ -30,6 +30,7 @@ ${this.#makeExtraServicesBlock()}
             return '';
         }
 
+        
         const link = apartmentData.get(this.apartment.id)?.ads;
         if (!link) {
             void log(`Ads link for apartment not found. ApartmentId: ${this.apartment.id} createBookMessageCreator.makeExtraServicesBlock`);

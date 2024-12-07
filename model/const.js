@@ -317,6 +317,7 @@ export const apartmentData = new Map([
     }],
     [219768, {
         address: 'ул. Тестовая д. 1 кв. 100',
+        ads: 'https://app.touchh.ru/kak-doma-welcome-3/?utm_medium=qr-7&utm_content=kak-doma&utm_term=Амурская,55-1',
         id: 219768,
         linenCount: 6,
         inHour: 13,

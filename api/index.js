@@ -20,9 +20,10 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
-        void log(`Requerst from ${req.url}, ${JSON.stringify(req.headers)}`);
-
         const realtyCalendarData = parseRCData(req.body);
+
+        void log(`Requerst from ${req.url}, ${JSON.stringify(req.headers)}. Data: ${JSON.stringify(realtyCalendarData)}`);
+
         if (!realtyCalendarData) {
             res.sendStatus(200);
             return;
@@ -31,11 +32,6 @@ app.post('/api/book', jsonParser, async (req, res) => {
         const { action, statusCd, data } = realtyCalendarData;
 
         if (statusCd !== 5) {
-            return;
-        }
-
-        if (action === realtyCalendarAction.delete) {
-            await deleteBook(data);
             return;
         }
 
