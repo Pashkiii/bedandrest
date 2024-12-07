@@ -20,6 +20,8 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
+        void log(`Requerst from ${req.url}, ${JSON.stringify(req.headers)}`);
+
         const realtyCalendarData = parseRCData(req.body);
         if (!realtyCalendarData) {
             res.sendStatus(200);

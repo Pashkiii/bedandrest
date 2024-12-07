@@ -1,5 +1,5 @@
-import { WhatsAppSender } from './whatsApp';
-import { SenderError } from './exception';
+import { WhatsAppSender } from './whatsApp.js';
+import { SenderError } from './exception.js';
 
 export async function sendMessage(phone, message) {
     if (process.env.NODE_ENV === 'development') {

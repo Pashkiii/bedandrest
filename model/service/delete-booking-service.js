@@ -1,5 +1,5 @@
-import { DB } from "../model/db";
-import { log } from "../logger";
+import { DB } from "../model/db/index.js";
+import { log } from "../logger/index.js";
 
 export class DeleteBookingService {
     async deleteBooking(booking) {
