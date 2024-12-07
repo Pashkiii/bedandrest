@@ -36,7 +36,6 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
         switch (action) {
             case (realtyCalendarAction.create):
-                await log('TEST: before createBookingService');
                 const createBookingService = new CreateBookingService();
                 await createBookingService.create(data);
                 break;

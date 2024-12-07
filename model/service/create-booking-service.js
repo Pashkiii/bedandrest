@@ -7,7 +7,6 @@ import { createContractService } from './create-contract.service.js';
 
 export class CreateBookingService {
     async create(book) {
-        await log(`TEST: Start createBookingService with booking: ${JSON.stringify(book)}`);
         if (!book.phone || !book.beginDate) {
             return;
         }

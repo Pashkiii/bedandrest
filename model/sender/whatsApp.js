@@ -23,6 +23,7 @@ export class WhatsAppSender {
 
             if (response.ok) {
                 const responseData = await response.json();
+                await log(`INFO. WhatsApp response: ${JSON.stringify(responseData)}`);
                 return {
                     ok: true
                 };
