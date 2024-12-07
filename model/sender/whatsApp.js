@@ -11,11 +11,9 @@ export class WhatsAppSender {
     async send(phone, message) {
         try {
             const body = JSON.stringify({
-                recipient: `+${phone}`,
+                recipient: phone,
                 body: message
             });
-
-            await log(`INFO. WhatsApp message: ${JSON.stringify(body)}`);
 
             const response = await fetch(`https://wappi.pro/api/sync/message/send?profile_id=${this.profileId}`, {
                 method: 'post',
@@ -25,13 +23,15 @@ export class WhatsAppSender {
 
             if (response.ok) {
                 const responseData = await response.json();
-                await log(`INFO. WhatsApp response: ${JSON.stringify(responseData)}`);
-                return {
-                    ok: true
-                };
-            } else {
-                await log(`ERROR. WhatsApp send message error. Response ${JSON.stringify(await response.json())}`);
+                if (responseData.status === 'done') {
+                    return {
+                        ok: true
+                    };
+                }
             }
+
+            await log(`ERROR. WhatsApp send message error. Response ${JSON.stringify(await response.json())}`);
+
 
             throw new SenderError('Message do\'t sended to WhatsApp', response.status);
         } catch (err) {

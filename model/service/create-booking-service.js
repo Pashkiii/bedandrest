@@ -60,13 +60,16 @@ export class CreateBookingService {
     }
 
     /**
-     * @param {Date} bookDate 
+     * @param {Date} bookingDate 
      * @param {Date} date
      */
-    #compareDate(bookDate, date) {
-        return bookDate.getFullYear() === date.getFullYear() &&
-            bookDate.getMonth() === date.getMonth() &&
-            bookDate.getDate() === date.getDate();
+    #compareDate(bookingDate, date) {
+        const bookingLocaleDateStr = bookingDate.toLocaleDateString();
+        const todayDateLocalStr = date.toLocaleDateString();
+
+        void log(`BookingDate: ${bookingLocaleDateStr}, Today: ${todayDateLocalStr}`);
+
+        return bookingLocaleDateStr === todayDateLocalStr;
     }
 
     /**
