@@ -11,9 +11,11 @@ export class WhatsAppSender {
     async send(phone, message) {
         try {
             const body = JSON.stringify({
-                recipient: phone,
+                recipient: `+${phone}`,
                 body: message
             });
+
+            await log(`INFO. WhatsApp message: ${JSON.stringify(body)}`);
 
             const response = await fetch(`https://wappi.pro/api/sync/message/send?profile_id=${this.profileId}`, {
                 method: 'post',
