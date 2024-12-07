@@ -25,7 +25,6 @@ app.post('/api/book', jsonParser, async (req, res) => {
         void log(`Request from ${req.url}, ${JSON.stringify(req.headers)}. Data: ${JSON.stringify(realtyCalendarData)}`);
 
         if (!realtyCalendarData) {
-            res.sendStatus(200);
             return;
         }
 
@@ -37,6 +36,7 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
         switch (action) {
             case (realtyCalendarAction.create):
+                await log('TEST: before createBookingService');
                 const createBookingService = new CreateBookingService();
                 await createBookingService.create(data);
                 break;
@@ -45,14 +45,12 @@ app.post('/api/book', jsonParser, async (req, res) => {
                 break;
             case realtyCalendarAction.delete:
                 const deleteBookingService = new DeleteBookingService();
-                await deleteBookingService(data);
+                await deleteBookingService.deleteBooking(data);
                 break;
             default:
                 console.error('Action not found');
         }
     } catch (error) {
-        console.error(error);
-
         if (error instanceof ParseDataError) {
             await log(`ParseDataError:${JSON.stringify(error)},message: ${error.message}.Data:${JSON.stringify(req.body)}`);
         } else {

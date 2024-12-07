@@ -22,7 +22,10 @@ export class WhatsAppSender {
             });
 
             if (response.ok) {
-                return await response.json();
+                const responseData = await response.json();
+                return {
+                    ok: true
+                };
             } else {
                 await log(`ERROR. WhatsApp send message error. Response ${JSON.stringify(await response.json())}`);
             }
