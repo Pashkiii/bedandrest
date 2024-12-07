@@ -35,7 +35,6 @@ export class CreateBookingService {
             };
 
             if (this.#compareDate(book.beginDate, today)) {
-                await log('INFO.Send second message')
                 await this.#sendConfirmMessage(book);
                 data.second_message_sended = true;
             }
@@ -57,8 +56,6 @@ export class CreateBookingService {
             book,
             contractLink
         })).makeMessage();
-
-        await log(`INFO.Second message: ${message}`);
         await sendMessage(book.phone, message);
     }
 
@@ -69,8 +66,6 @@ export class CreateBookingService {
     #compareDate(bookingDate, date) {
         const bookingLocaleDateStr = bookingDate.toLocaleDateString();
         const todayDateLocalStr = date.toLocaleDateString();
-
-        void log(`BookingDate: ${bookingLocaleDateStr}, Today: ${todayDateLocalStr}`);
 
         return bookingLocaleDateStr === todayDateLocalStr;
     }
