@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
 import { realtyCalendarAction } from '../model/const.js';
-import { createBook, updateBook, deleteBook } from '../model/book.js';
+import { updateBook, deleteBook } from '../model/book.js';
 import { parseRCData } from '../model/parse-rc-data.js';
 import { log } from '../model/logger/index.js';
 import { ParseDataError } from '../model/exception.js';
+import { CreateBookingService } from '../model/service/create-booking-service.js';
+import { DeleteBookingService } from '../model/service/delete-booking-service.js';
 
 import express, { json } from 'express';
 
@@ -18,7 +20,13 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 
 app.post('/api/book', jsonParser, async (req, res) => {
     try {
-        const { action, statusCd, data } = parseRCData(req.body);
+        const realtyCalendarData = parseRCData(req.body);
+        if (!realtyCalendarData) {
+            res.sendStatus(200);
+            return;
+        }
+
+        const { action, statusCd, data } = realtyCalendarData;
 
         if (statusCd !== 5) {
             return;
@@ -31,10 +39,15 @@ app.post('/api/book', jsonParser, async (req, res) => {
 
         switch (action) {
             case (realtyCalendarAction.create):
-                await createBook(data);
+                const createBookingService = new CreateBookingService();
+                await createBookingService.create(data);
                 break;
             case realtyCalendarAction.update:
                 await updateBook(data);
+                break;
+            case realtyCalendarAction.delete:
+                const deleteBookingService = new DeleteBookingService();
+                await deleteBookingService(data);
                 break;
             default:
                 console.error('Action not found');
@@ -43,7 +56,7 @@ app.post('/api/book', jsonParser, async (req, res) => {
         console.error(error);
 
         if (error instanceof ParseDataError) {
-            await log(["ParseDataError", JSON.stringify(req.body), JSON.stringify(error)]);
+            await log(`ParseDataError:${JSON.stringify(error)},message: ${error.message}.Data:${JSON.stringify(req.body)}`);
         } else {
             await log(JSON.stringify(error));
         }

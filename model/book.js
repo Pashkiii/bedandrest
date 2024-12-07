@@ -11,7 +11,7 @@ function convertToPostgresTime(date) {
     return new Date(date.getTime() + (1000 * 60 * (-(new Date()).getTimezoneOffset()))).toISOString().replace('T', ' ').replace('Z', '');
 }
 
-export async function confirmBooking() {
+export async function confirmBookings() {
     const today = new Date();
 
     try {
@@ -27,33 +27,40 @@ export async function confirmBooking() {
         const sendedMessagesIds = [];
 
         for (const book of books) {
-            try {
-                const contractLink = await createContractService(book);
-                console.log(contractLink);
+            const bookId = await confirmBooking(book);
 
-                if (!contractLink){
-                    continue;
-                }
-
-                const messageCreator = new ConfirmBookMessageCreator({ 
-                    book,
-                    contractLink
-                });
-                const message = messageCreator.makeMessage();
-                await sendMessage(book.phone, message);
-
-                sendedMessagesIds.push(book.id);
-            } catch (error) {
-                log('Send second message error', JSON.stringify({
-                    book,
-                    error,
-                }));
+            if (bookId) {
+                sendedMessagesIds.push(bookId);
             }
         }
 
         await storage.setSecondMessageSended(sendedMessagesIds);
     } catch (error) {
         log(`Send second messages ${today} error`, error);
+    }
+}
+
+export async function confirmBooking(book) {
+    try {
+        const contractLink = await createContractService(book);
+        
+        if (!contractLink){
+            return;
+        }
+
+        const messageCreator = new ConfirmBookMessageCreator({ 
+            book,
+            contractLink
+        });
+        const message = messageCreator.makeMessage();
+        await sendMessage(book.phone, message);
+
+        return book.id;
+    } catch (error) {
+        log('Send second message error', JSON.stringify({
+            book,
+            error,
+        }));
     }
 }
 

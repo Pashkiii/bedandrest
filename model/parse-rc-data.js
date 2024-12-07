@@ -8,6 +8,9 @@ export function parseRCData(data) {
     }
 
     const action = parseAction(data);
+    if (!Object.values(realtyCalendarAction).includes(action)) {
+        throw new ParseDataError('Invalid action');
+    }
 
     const { 
         id, 
@@ -85,12 +88,22 @@ function parseBooking(data, action) {
     const booking = data.booking;
 
     const id = booking['id'];
+    const statusCd = parseInt(booking['status_cd'], 10);
+
+    if (action === realtyCalendarAction.delete) {
+        return {
+            id,
+            statusCd
+        };
+    }
+
+
     const clientId = booking['client_id'];
     const amount = booking['amount'];
 
     const beginDate = new Date(booking['begin_date']);
     const endDate = new Date(booking['end_date']);
-    const statusCd = parseInt(booking['status_cd'], 10);
+   
 
     const client = booking.client;
     if (!isObject(client)) {

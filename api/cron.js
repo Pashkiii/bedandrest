@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
-import { confirmBooking } from '../model/book.js';
+import { confirmBookings } from '../model/book.js';
 import { log } from '../model/logger/index.js';
 
 dotenv.config();
 
 export async function GET(request) {
     try {
-        await confirmBooking();
+        await confirmBookings();
     } catch (error) {
         await log(['Start job error', JSON.stringify(error)].join(' '));
     }
