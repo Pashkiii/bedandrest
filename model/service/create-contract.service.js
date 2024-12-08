@@ -31,6 +31,7 @@ function convertToContractData(book) {
             getInDate(book),
             getOutDate(book),
             getInTime(apartment),
+            getOutTime(apartment),
             getDeposit(apartment),
             getAmount(book),
             getPricePerDay(book),
@@ -67,6 +68,10 @@ function getOutDate(book) {
 
 function getInTime(apartment) {
     return createEntity('Время заезда', `${apartment.inHour}:00`);
+}
+
+function getOutTime(apartment) {
+    return createEntity('время выезда', `${apartment.outHour}:00`);
 }
 
 function getDeposit(apartment) {
