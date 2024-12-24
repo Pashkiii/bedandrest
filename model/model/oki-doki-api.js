@@ -9,6 +9,8 @@ export class OkiDokiApi {
     static async contract(data) {
         const url = OkiDokiApi.makeUri('contract');
 
+        await log(`OkiDoki data: ${JSON.stringify(data)}`);
+
         try {
             const response = await fetch(url, {
                 method: 'POST',
