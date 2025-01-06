@@ -1,6 +1,7 @@
 import { OkiDokiApi } from '../model/oki-doki-api.js';
 import { apartmentData } from '../const.js';
 import { log } from '../logger/index.js';
+import { sendMessage } from '../sender/index.js';
 
 export async function createContractService(book) {
     const data = convertToContractData(book);
@@ -12,7 +13,26 @@ export async function createContractService(book) {
         return null;
     }
 
+    const okiDokiResponse = result[1];
+    if (okiDokiResponse.status === 0) {
+        await sendMessageToManager(book, okiDokiResponse.link);
+        
+        return null;
+    }
+
     return result[1]?.link || null;
+}
+
+async function sendMessageToManager(bookingModel, link) {
+    try {
+        const message = `Внимание! Проблема с отправкой договора OkiDoki, проверьте данные и отправьте договор вручную.
+Бронирование https://realtycalendar.ru/chessmate/event/${bookingModel.id}
+
+Ссылка на договор: ${link}`;
+        const result = await sendMessage(process.env.MANAGER_PHONE, message);
+    } catch (error) {
+        await log(`ERROR. OkiDoki message to manager not sended. ${JSON.stringify(bookingModel)}`);
+    }
 }
 
 function convertToContractData(book) {

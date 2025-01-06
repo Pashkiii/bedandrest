@@ -31,7 +31,7 @@ export class CreateBookingService {
                 phone: book.phone,
                 first_message_sended: true,
                 second_message_sended: false,
-                data: JSON.stringify(book.data),
+                data: typeof book.data === 'string' ? book.data ? JSON.stringify(book.data)
             };
 
             if (this.#compareDate(book.beginDate, today)) {
