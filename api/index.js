@@ -24,6 +24,7 @@ app.engine('hbs', expressHbs.engine({
 	defaultLayout: 'layout',
 	extname: 'hbs',
 }));
+app.set('views', './views');
 app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
