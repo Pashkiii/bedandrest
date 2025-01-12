@@ -1,0 +1,36 @@
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">ID</th>
+      <th scope="col">Адрес</th>
+      <th scope="col">Ссылка на рекламу</th>
+      <th scope="col">Время заезда</th>
+      <th scope="col">Время выезда</th>
+      <th scope="col">Кол-во белья</th>
+      <th scope="col">Депозит</th>
+      <th scope="col">Ссылка на фото</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each apartments}}
+      <tr>
+        <td>
+          <a class="btn btn-primary" href="/apartments/{{this.id}}" role="button">Edit</a>
+        </td>
+        <td>{{this.id}}</td>
+        <td>{{this.address}}</td>
+        <td>{{this.ads}}</td>
+        <td>{{this.inHour}}:00</td>
+        <td>{{this.outHour}}:00</td>
+        <td>{{this.linens}}</td>
+        <td>{{this.deposit}}</td>
+        <td>
+          <a href="{{this.thingsLink}}">
+            {{this.thingsLink}}
+          </a>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

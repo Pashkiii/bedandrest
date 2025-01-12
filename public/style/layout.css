@@ -1,0 +1,18 @@
+.bd-layout {
+    display: grid;
+    grid-template-areas: "sidebar main";
+    grid-template-columns: 1fr 5fr;
+    gap: 1.5rem;
+}
+
+.bd-sidebar {
+    grid-area: sidebar
+}
+
+.bd-main {
+    grid-area: main
+}
+
+.bg-navbar {
+    background-color: var(--bs-primary);
+}

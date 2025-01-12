@@ -1,0 +1,106 @@
+<div>
+  <div class="row mb-3">
+    <h3 class="mr-4">№ {{booking.id}}</h3>
+    <a href="{{booking.realtyBookingLink}}">
+      Открыть в RealtyCalendar
+    </a>
+  </div>
+  <h4 class="mb-3">Бронирование</h4>
+  <div class="row mb-1">
+    <label for="apartment" class="col-sm-2 col-form-label">Квартира</label>
+    <div class="col-sm-10">
+      <a href="https://realtycalendar.ru/apartment/#/address/{{booking.apartment.id}}">
+        {{#if booking.apartment.address}}
+          <span>{{booking.apartment.address}}</span>
+        {{else}}
+          <span>{{booking.apartment.id}}</span>
+        {{/if}}
+      </a>
+    </div>
+  </div>
+  <div class="row mb-1">
+    <label for="beginDate" class="col-sm-2 col-form-label">Дата заезда</label>
+    <div class="col-sm-10">
+      {{booking.beginDate}}
+    </div>
+  </div>
+  <div class="row mb-1">
+    <label for="endDate" class="col-sm-2 col-form-label">Дата выезда</label>
+    <div class="col-sm-10">
+      {{booking.endDate}}
+    </div>
+  </div>
+  <div class="row mb-1">
+    <label for="createDate" class="col-sm-2 col-form-label">Дата создания</label>
+    <div class="col-sm-10">
+      {{booking.createDate}}
+    </div>
+  </div>
+  <h4 class="mb-3">Клиент</h4>
+  <div class="row mb-1">
+    <label for="clientId" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      {{booking.client.id}}
+    </div>
+  </div>
+  <div class="row mb-1">
+    <label for="clientName" class="col-sm-2 col-form-label">Имя</label>
+    <div class="col-sm-10">
+      {{booking.client.name}}
+    </div>
+  </div>
+  <div class="row mb-1">
+    <label for="clientPhone" class="col-sm-2 col-form-label">Телефон</label>
+    <div class="col-sm-10">
+      {{booking.client.tel}}
+    </div>
+  </div>
+  <h4>Информация</h4>
+  <div class="row mb-1">
+    <label for="firstMessage" class="col-sm-2 col-form-label">Первое сообщение</label>
+    <div class="col-sm-2">
+      {{#if booking.firstMessageSent}}
+        <span>Отправлено</span>
+      {{else}}
+        <span>Не отправлено</span>
+      {{/if}}
+    </div>
+    <div class="col-sm-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Скоро">
+      {{#unless booking.firstMessageSent}}
+        <button
+            type="button"
+            disabled
+            class="btn btn-primary"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+        >
+          Отправить
+        </button>
+      {{/unless}}
+    </div>
+  </div>
+  <div class="row mb-1">
+    <label for="secondMessage" class="col-sm-2 col-form-label">Второе сообщение</label>
+    <div class="col-sm-2">
+      {{#if booking.secondMessageSent}}
+        <span>Отправлено</span>
+      {{else}}
+        <span>Не отправлено</span>
+      {{/if}}
+    </div>
+    <div class="col-sm-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Скоро">
+      {{#unless booking.secondMessageSent}}
+        <button
+            type="button"
+            disabled
+            class="btn btn-primary"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+        >
+          Отправить
+        </button>
+      {{/unless}}
+    </div>
+  </div>
+  <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Скоро">
+    <button type="button" class="btn btn-danger">Удалить</button>
+  </div>
+</div>

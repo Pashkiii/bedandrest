@@ -14,7 +14,7 @@ export class CreateBookingService {
         const today = new Date();
 
         try {
-            const message = (new CreateBookMessageCreator(book)).makeMessage();
+            const message = (new CreateBookMessageCreator(book)).write();
             const sendResult = await sendMessage(book.phone, message);
             if (!sendResult.ok) {
                 return;
@@ -71,7 +71,7 @@ export class CreateBookingService {
     }
 
     /**
-     * @param {Date} booking date 
+     * @param {Date} date
      */
     #convertToPostgresTime(date) {
         return new Date(date.getTime() + (1000 * 60 * (-(new Date()).getTimezoneOffset()))).toISOString().replace('T', ' ').replace('Z', '');

@@ -17,7 +17,7 @@ export class WhatsAppSender {
 
             const response = await fetch(`https://wappi.pro/api/sync/message/send?profile_id=${this.profileId}`, {
                 method: 'post',
-                headers: this.headers,
+                headers: this.#getHeaders(),
                 body
             });
 
@@ -32,8 +32,7 @@ export class WhatsAppSender {
 
             await log(`ERROR. WhatsApp send message error. Response ${JSON.stringify(await response.json())}`);
 
-
-            throw new SenderError('Message do\'t sended to WhatsApp', response.status);
+            throw new SenderError('Message don\'t sent to WhatsApp', response.status);
         } catch (err) {
             console.error(err);
             log('WhatsApp send message error');
@@ -42,7 +41,7 @@ export class WhatsAppSender {
         }
     }
 
-    get headers() {
+    #getHeaders() {
         const headers = {};
 
         headers['Content-Type'] = 'application/json';

@@ -1,12 +1,12 @@
-import { apartmentData, BRAND } from '../const.js';
+import { BRAND } from '../const.js';
 import { log } from '../logger/index.js';
 
 export class CreateBookMessageCreator {
-    constructor(data) {
-        this.apartment = data.apartment;
+    constructor(apartment = null) {
+        this.apartment = apartment;
     }
 
-    makeMessage() {
+    write() {
         return `
 Здравствуйте! 😊
 
@@ -25,13 +25,13 @@ ${this.#makeExtraServicesBlock()}
 
 
     #makeExtraServicesBlock() {
-        if (!apartmentData.has(this.apartment.id)) {
+        if (!this.apartment) {
             void log(`Apartment data not found. ApartmentId: ${this.apartment.id} createBookMessageCreator.makeExtraServicesBlock`);
             return '';
         }
 
         
-        const link = apartmentData.get(this.apartment.id)?.ads;
+        const link = this.apartment?.ads;
         if (!link) {
             void log(`Ads link for apartment not found. ApartmentId: ${this.apartment.id} createBookMessageCreator.makeExtraServicesBlock`);
             return '';
