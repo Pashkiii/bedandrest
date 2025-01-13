@@ -16,6 +16,12 @@ export class ApiBookingController {
 			}
 
 			const action = realtyCalendarAdapter.extractAction();
+			await log([
+				'INFO',
+				'ApiBookingController',
+				`Action: ${action}`
+			].join('. '));
+
 			switch (action) {
 				case (realtyCalendarAction.create):
 					await createBooking(realtyCalendarAdapter.extractBooking());
@@ -25,7 +31,7 @@ export class ApiBookingController {
 					break;
 				case realtyCalendarAction.delete:
 					const bookingId = realtyCalendarAdapter.extractBookingId();
-					await deleteBooking( bookingId ) ;
+					await deleteBooking(bookingId);
 					break;
 				default:
 					await log(`ERROR. ApiBookingController_booking. Action not found: ${action}`);
