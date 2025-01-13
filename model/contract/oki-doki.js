@@ -24,6 +24,14 @@ export class OkiDoki {
 			const result = await response.json();
 
 			if (response.ok) {
+				await log([
+					'INFO',
+					'OkiDoki',
+					'CreateContract',
+					`Contract: ${JSON.stringify(contract)}`,
+					`Response: ${JSON.stringify(response)}`,
+				].join('. '));
+
 				return {
 					done: true,
 					status: result?.status ?? 0,
