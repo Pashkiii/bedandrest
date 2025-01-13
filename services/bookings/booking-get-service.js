@@ -21,7 +21,7 @@ export class BookingGetService {
 		const { error, booking } = await db.getBookingById(bookingId);
 
 		if (error) {
-			await log(`ERROR. BookingService. Get booking by id error: ${JSON.stringify(error)}`);
+			await log(`ERROR. BookingService. Get booking by id (${bookingId}) error: ${JSON.stringify(error)}`);
 
 			return null;
 		}

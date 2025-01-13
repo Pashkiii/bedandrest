@@ -6,6 +6,9 @@ export class BookingActionService {
 	static async insertBooking(bookingModel) {
 		const bookingStorage = new BookingDb();
 		const bookingDto = createBookingDto(bookingModel);
+
+		await log(`INFO. BookingActionService.InsertBooking. BookingModel: ${JSON.stringify(bookingModel)}. BookingDto: ${JSON.stringify(bookingDto)}`);
+
 		const { error } = await bookingStorage.addBooking(bookingDto);
 
 		if (error) {
