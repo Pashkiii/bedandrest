@@ -11,14 +11,16 @@ export class ContractService {
 			return {
 				done: false,
 				status: 0,
+				link: null,
 			};
 		}
 
-		const { error, done, result, status } = await okiDoki.sendContract(contract);
+		const { error, done, result, status, link } = await okiDoki.sendContract(contract);
 		if (done) {
 			return {
 				done,
 				status,
+				link,
 				result,
 			};
 		}
@@ -28,6 +30,8 @@ export class ContractService {
 		return {
 			done,
 			error,
+			link: null,
+			status: -1,
 		};
 	}
 }

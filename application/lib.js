@@ -24,7 +24,14 @@ export async function sendSecondMessage(bookingModel, apartment) {
 
 	const messengerService = new MessengerService();
 	const contractService = new ContractService();
-	const sendContractResult = contractService.sendContract(bookingModel, apartment);
+	const sendContractResult = await contractService.sendContract(bookingModel, apartment);
+
+	await log([
+		'INFO',
+		'SendSecondMessage',
+		`SendContractResult: ${JSON.stringify(sendContractResult)}`,
+	].join('. '));
+
 	if (!sendContractResult.done || !sendContractResult.status) {
 		await log([
 				'WARN',
@@ -37,7 +44,7 @@ export async function sendSecondMessage(bookingModel, apartment) {
 		);
 
 		const managerTel = process.env.MANAGER_PHONE;
-		const link = sendContractResult?.result?.link || null;
+		const link = sendContractResult.link || null;
 		await messengerService.send(managerTel, `
 				Внимание! Проблема с отправкой договора OkiDoki, проверьте данные и отправьте договор вручную.
 				Бронирование https://realtycalendar.ru/chessmate/event/${bookingModel.id}

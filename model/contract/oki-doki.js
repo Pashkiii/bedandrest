@@ -1,4 +1,4 @@
-import { createContract } from './create-contract.js'
+import { createContract } from './create-contract.js';
 import fetch from 'node-fetch';
 import { log } from '../logger/index.js';
 
@@ -23,28 +23,21 @@ export class OkiDoki {
 			});
 			const result = await response.json();
 
-			if (response.ok) {
-				await log([
-					'INFO',
-					'OkiDoki',
-					'CreateContract',
-					`Contract: ${JSON.stringify(contract)}`,
-					`Response: ${JSON.stringify(result)}`,
-				].join('. '));
+			if (!response.ok) {
+				await log(`ERROR. OkiDoki send contract error. Response status: ${response.status}, error: ${response.error}.`);
 
 				return {
-					done: true,
-					status: result?.status?.['internal_id'] ?? 0,
-					result
+					done: false,
+					status: response.status,
+					error: response.error,
 				};
 			}
 
-			await log(`ERROR. OkiDoki send contract error. Response status: ${response.status}, error: ${response.error}.`);
-
 			return {
-				done: false,
-				status: response.status,
-				error: response.error,
+				done: true,
+				status: result?.status?.['internal_id'] ?? 0,
+				link: result?.link ?? null,
+				result,
 			};
 		} catch (error) {
 			await log(`ERROR. OkiDoki send contract error. API: ${url} error: ${error.name}, ${error.message}`);
