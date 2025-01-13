@@ -24,6 +24,11 @@ export function createContract(booking, apartment) {
 	};
 }
 
+function parseBookingData(bookingModel) {
+	const data = JSON.parse(bookingModel.data);
+	return data?.data;
+}
+
 const createEntity = (keyword, value) => {
 	return { keyword, value };
 }
@@ -53,15 +58,15 @@ function getDeposit(apartment) {
 }
 
 function getAmount(booking) {
-	const data = JSON.parse(booking.data);
-	const amount = data.booking?.['amount'];
+	const data = parseBookingData(booking);
+	const amount = data?.booking?.['amount'];
 
 	return createEntity('Полная стоимость', amount);
 }
 
 function getPricePerDay(booking) {
-	const data = JSON.parse(booking.data);
-	const pricePerDay = parseInt(data.booking?.['price_per_day'], 10) ?? 0;
+	const data = parseBookingData(booking);
+	const pricePerDay = parseInt(data?.booking?.['price_per_day'], 10) ?? 0;
 
 	return createEntity('Цена в сутки', pricePerDay);
 }
