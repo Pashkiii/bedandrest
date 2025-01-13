@@ -13,10 +13,10 @@ export class OkiDoki {
 	}
 
 	async sendContract(contract) {
-		const url = this.#makeUri('contract');
+		const url = 'https://api.doki.online/external/contract';
 
 		try {
-			const response = await fetch(url, {
+			const response = await fetch('https://api.doki.online/external/contract', {
 				method: 'POST',
 				headers: this.#getHeaders(),
 				body: JSON.stringify(contract)
@@ -29,12 +29,12 @@ export class OkiDoki {
 					'OkiDoki',
 					'CreateContract',
 					`Contract: ${JSON.stringify(contract)}`,
-					`Response: ${JSON.stringify(response)}`,
+					`Response: ${JSON.stringify(result)}`,
 				].join('. '));
 
 				return {
 					done: true,
-					status: result?.status ?? 0,
+					status: result?.status?.['internal_id'] ?? 0,
 					result
 				};
 			}
@@ -54,10 +54,6 @@ export class OkiDoki {
 				done: false,
 			};
 		}
-	}
-
-	#makeUri(path) {
-		return 'https://api.doki.online/external/' + path;
 	}
 
 	#getHeaders() {
