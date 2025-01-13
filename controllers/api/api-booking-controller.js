@@ -16,12 +16,6 @@ export class ApiBookingController {
 			}
 
 			const action = realtyCalendarAdapter.extractAction();
-			await log([
-				'INFO',
-				'ApiBookingController',
-				`Action: ${action}`
-			].join('. '));
-
 			switch (action) {
 				case (realtyCalendarAction.create):
 					await createBooking(realtyCalendarAdapter.extractBooking());

@@ -26,12 +26,6 @@ export async function sendSecondMessage(bookingModel, apartment) {
 	const contractService = new ContractService();
 	const sendContractResult = await contractService.sendContract(bookingModel, apartment);
 
-	await log([
-		'INFO',
-		'SendSecondMessage',
-		`SendContractResult: ${JSON.stringify(sendContractResult)}`,
-	].join('. '));
-
 	if (!sendContractResult.done || !sendContractResult.status) {
 		await log([
 				'WARN',
