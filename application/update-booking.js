@@ -11,7 +11,7 @@ import { BookingActionService } from '../services/bookings/booking-action-servic
 
 export async function updateBooking(bookingModel) {
 	try {
-		const booking = await BookingGetService.getBookingById(bookingModel.bookingId);
+		const booking = await BookingGetService.getBookingById(bookingModel.id);
 		if (!booking) {
 			await log(`WARN. Update booking. Booking not found ${JSON.stringify(booking)}`);
 			await createBooking(bookingModel);
