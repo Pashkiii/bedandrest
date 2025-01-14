@@ -13,6 +13,16 @@ export async function confirmBookings() {
 			BookingGetService.getBookingsStartingToday(today),
 			ApartmentService.getAllApartmentsList(),
 		]);
+
+		if (!Array.isArray(bookings)) {
+			await log([
+				'ERROR',
+				'ConfirmBooking',
+				'"bookings" not iterable',
+				`bookings: ${bookings} (${typeof bookings})`,
+			].join('. '));
+		}
+
 		if (bookings.length === 0) {
 			return;
 		}
