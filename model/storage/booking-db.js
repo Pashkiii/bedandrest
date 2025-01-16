@@ -38,6 +38,9 @@ export class BookingDb extends Supabase {
 		return { error, bookings: data };
 	}
 
+	/**
+	 * @param {Date} endDate
+	 */
 	async getBookingsByEndDate(endDate) {
 		const endDateUtc = convertDateToUtcTimezone(endDate);
 		const { error, data } = await this.client

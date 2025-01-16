@@ -1,12 +1,8 @@
 import { BRAND } from '../const.js';
 
 export class LeaveMessageCreator {
-    constructor(data) {
-        this.data = data;
-    }
-
-    makeMessage() {
-        const message = `
+    write() {
+        return `
 Здравствуйте! 🙏
 
 Спасибо, что остановились у нас. Надеемся, вам всё понравилось.
@@ -34,7 +30,5 @@ export class LeaveMessageCreator {
 
 Будем рады видеть вас снова! 🌟
 `;
-
-        return message;
     }
 }

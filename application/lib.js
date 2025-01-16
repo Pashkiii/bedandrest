@@ -2,6 +2,7 @@ import { CreateBookMessageCreator } from '../model/message/createBookMessageCrea
 import { MessengerService } from '../services/messenger-service.js';
 import { ContractService } from '../services/contract-service.js';
 import { ConfirmBookMessageCreator } from '../model/message/confirmBookMessageCreator.js';
+import { LeaveMessageCreator } from '../model/message/leaveMessageCreator.js';
 import { log } from '../model/logger/index.js';
 
 export async function sendFirstMessage(bookingModel, apartment) {
@@ -52,6 +53,29 @@ export async function sendSecondMessage(bookingModel, apartment) {
 		contractLink: sendContractResult.status > 0 ? sendContractResult?.result?.link || null : null,
 	})).makeMessage();
 	const { done } = await messengerService.send(bookingModel.phone, secondMessage);
+
+	return { done };
+}
+
+export async function sendThirdMessage(bookingModel) {
+	if (!bookingModel.phone) {
+		return { done: false };
+	}
+
+	const thirdMessage = new LeaveMessageCreator().write();
+	const messengerService = new MessengerService();
+	const { error, done } = await messengerService.send(
+		bookingModel.phone,
+		thirdMessage,
+	);
+
+	if (error) {
+		await log([
+			'ERROR',
+			'SendThirdMessage',
+			`Error: ${error.name}: ${error.message}`,
+		]);
+	}
 
 	return { done };
 }

@@ -19,20 +19,23 @@ async function insertLog(message) {
     }
 }
 
-function getMessage(logData) {
+function getMessage(logData, options) {
+    if (Array.isArray(logData)) {
+        return logData.join(options?.separator || '. ');
+    }
     if (logData instanceof Error) {
         return `${logData.name}: ${logData.message}`;
     }
 
-    return Array.isArray(logData) ? logData.join("") : logData;
+    return logData.toString();
 }
 
-export async function log(message) {
+export async function log(message, options) {
     const d = new Date();
-    const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`;
+    const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message, options)} \n`;
 
     if (process.env.NODE_ENV === 'development') {
-        console.log(`${d.toLocaleString("ru-RU")}: ${getMessage(message)} \n`);
+        console.log(`${d.toLocaleString("ru-RU")}: ${getMessage(message, options)} \n`);
         return;
     }
 

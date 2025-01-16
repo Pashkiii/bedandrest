@@ -44,12 +44,18 @@ export class BookingGetService {
 		return bookings.map((b) => convertBookingDto(b));
 	}
 
+	/**
+	 * @param {Date} date
+	 */
 	static async getBookingsEndingToday(date) {
 		const db = new BookingDb();
-		const { error, bookings = [] } = await db.getBookingsEndingToday(date);
+		const { error, bookings = [] } = await db.getBookingsByEndDate(date);
 
 		if (error) {
-			await log(`ERROR. BookingService. Get bookings ending today: ${JSON.stringify(error)}`);
+			await log([
+				`ERROR. BookingService. Get bookings ending today`,
+				`Error: ${error.name}; ${error.message}; ${JSON.stringify(error)}`,
+			].join('. '));
 		}
 
 		return bookings.map((b) => convertBookingDto(b));

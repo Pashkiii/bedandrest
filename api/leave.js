@@ -1,14 +1,18 @@
 import dotenv from 'dotenv';
-import { leaveBook } from '../model/book.js';
 import { log } from '../model/logger/index.js';
+import { leaveBooking } from '../application/leave-booking.js';
 
 dotenv.config();
 
-export async function GET(request) {
+export async function GET() {
     try {
-        await leaveBook();
+        await leaveBooking();
     } catch (error) {
         await log(['Start job error', error]);
     }
     return new Response(`Hello from ${process.env.VERCEL_REGION}`);
+}
+
+if (process.env.NODE_ENV === 'development') {
+    await GET();
 }
