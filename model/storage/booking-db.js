@@ -51,6 +51,22 @@ export class BookingDb extends Supabase {
 		return { error, bookings: data };
 	}
 
+	/**
+	 * @param {number} apartmentId
+	 * @param {Date} date
+	 */
+	async getActiveBookingByApartmentId(apartmentId, date){
+		const dateUtc = convertDateToUtcTimezone(date);
+		const { error, data } = await this.client
+			.from(this.table)
+			.select('id')
+			.eq('apartment_id', apartmentId)
+			.lte('begin_date', dateUtc)
+			.gte('end_date', dateUtc);
+
+		return { error, bookingIds: data }
+	}
+
 	async addBooking(booking) {
 		const { error, status } = await this.client
 			.from(this.table)

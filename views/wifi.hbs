@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="/style/wifi.css" rel="stylesheet"/>
+  <title>Document</title>
+</head>
+<body>
+<div class="wifi-page">
+  <div class="wifi-content">
+    <section class="wifi-block">
+      <img class="wifi-block__logo" decoding="async" height="110" width="145" src="/bed-and-rest-logo.png"
+           alt="BedAndRest logo"/>
+      <div class="wifi-block__title">
+        <span>Дорогой гость! Мы рады приветствовать Вас в наших апартаментах</span>
+      </div>
+      <div class="wifi-block__wifi">
+        <div class="wifi-block__wifi-wrap">
+          <div class="wifi-block__wifi__title">Поключение к WiFi</div>
+          <div class="wifi-block__wifi-row">
+            <span style="color: #808080;">Сеть:</span>
+            <span>Blag</span></div>
+          <div class="wifi-block__wifi-row">
+            <span style="color: #808080;">Пароль:</span>
+            <span class="bold" style="font-size: 18px;">79797979</span>
+            <input id="wifi-password" readonly type="hidden" value="79797979"/>
+          </div>
+          <button
+              id="wifi-copy-btn"
+              class="wifi-button --btn"
+              style="margin-bottom: 7px;"
+              type="button">
+            Скопировать пароль
+          </button>
+          <button id="wifi-collapse-instruction-btn" class="wifi-button --link" type="button">Посмотреть инструкцию
+          </button>
+          <div id="wifi-collapse-instruction-block" class="wifi-block__wifi__instruction-collapse">
+            <div class="wifi-block__wifi__instruction">
+              <p>
+                Найдите сеть с названием <span class="bold">Blag</span> и подключитесь с использованием пароля <span
+                  class="bold">79797979</span> (скопируйте его выше)
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <iframe
+        id="wifi-abs"
+        height="3550px"
+        width="100%"
+        src="https://bedandrest.ru/dopolnitelnye-predlozheniya/"></iframe>
+  </div>
+</div>
+
+<script src="/script/wifi.js" type="application/javascript"></script>
+</body>
+</html>

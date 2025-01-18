@@ -4,12 +4,13 @@
       <th scope="col"></th>
       <th scope="col">ID</th>
       <th scope="col">Адрес</th>
-      <th scope="col">Ссылка на рекламу</th>
+      <th style="max-width: 220px" scope="col">Ссылка на рекламу</th>
       <th scope="col">Время заезда</th>
       <th scope="col">Время выезда</th>
       <th scope="col">Кол-во белья</th>
       <th scope="col">Депозит</th>
-      <th scope="col">Ссылка на фото</th>
+      <th style="max-width: 220px" scope="col">Ссылка на фото</th>
+      <th style="max-width: 220px" scope="col">Ссылка на WiFi</th>
     </tr>
   </thead>
   <tbody>
@@ -20,15 +21,18 @@
         </td>
         <td>{{this.id}}</td>
         <td>{{this.address}}</td>
-        <td>{{this.ads}}</td>
+        <td style="max-width: 220px;overflow-wrap: break-word;font-size: 12px;">{{this.ads}}</td>
         <td>{{this.inHour}}:00</td>
         <td>{{this.outHour}}:00</td>
         <td>{{this.linens}}</td>
         <td>{{this.deposit}}</td>
         <td>
-          <a href="{{this.thingsLink}}">
+          <a style="max-width: 220px;overflow-wrap: break-word;font-size: 12px;" href="{{this.thingsLink}}">
             {{this.thingsLink}}
           </a>
+        </td>
+        <td style="max-width: 220px;overflow-wrap: break-word;font-size: 12px;">
+          {{this.wifiLink}}
         </td>
       </tr>
     {{/each}}

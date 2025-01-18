@@ -18,7 +18,7 @@ apartmentRouter.get('/:id', async function (req, response) {
     }
 
     const apartment = await ApartmentController.getApartment(apartmentId);
-    if (!apartmentId) {
+    if (!apartment) {
         return response.sendStatus(404);
     }
 

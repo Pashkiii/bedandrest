@@ -1,6 +1,6 @@
 <form id="apartment">
   <div class="mb-3">
-    <h3>{{apartment.id}}</h3>
+    <h3>№{{apartment.id}}</h3>
   </div>
   <div class="mb-3">
     <label for="address" class="form-label">Адрес</label>
@@ -29,5 +29,11 @@
   <div class="mb-3">
     <label for="thingsLink" class="form-label">Ссылка на фото квартиры</label>
     <input id="thingsLink" class="form-control form-control-sm" type="text" value="{{apartment.thingsLink}}" required />
+  </div>
+  <div class="mb-3">
+    <label>Ссылка WiFi</label>
+    <div>
+      {{apartment.wifiLink}}
+    </div>
   </div>
 </form>

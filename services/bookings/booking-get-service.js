@@ -60,4 +60,44 @@ export class BookingGetService {
 
 		return bookings.map((b) => convertBookingDto(b));
 	}
+
+	/**
+	 * @param {number} apartmentId
+	 * @param {Date} date
+	 * @returns {Promise<id | null>}
+	 */
+	static async getActiveBookingByApartmentId(apartmentId, date) {
+		const db = new BookingDb();
+		const { error, bookingIds } = await db.getActiveBookingByApartmentId(
+			apartmentId,
+			date,
+		);
+
+		if (error) {
+			await log([
+				'ERROR. BookingService. GetActiveBookingByApartmentId',
+				`Error: ${error.name}: ${error.message}`,
+			]);
+
+			return null;
+		}
+		if (!Array.isArray(bookingIds)) {
+			await log([
+				'WARN. BookingService. GetActiveBookingByApartmentId',
+				`BookingIds is not iterable (${typeof bookingIds}): ${JSON.stringify(bookingIds)}`
+			]);
+
+			return null;
+		}
+		if (bookingIds.length > 1) {
+			await log([
+				'WARN. BookingService. GetActiveBookingByApartmentId',
+				`BookingIds more that one: ${JSON.stringify(bookingIds)}`,
+				`ApartmentId: ${apartmentId}`,
+				`Date: ${date.toLocaleString()}`,
+			]);
+		}
+
+		return bookingIds.map((bookingId) => bookingId.id);
+	}
 }
