@@ -8,6 +8,12 @@ import { sendSecondMessage } from './lib.js';
 export async function confirmBookings() {
 	const today = syncDateToMoscow(new Date());
 
+	await log([
+		'INFO',
+		'ConfirmBooking',
+		`Start function time: ${today.toString()}`,
+	]);
+
 	try {
 		const [bookings, apartments] = await Promise.all([
 			BookingGetService.getBookingsStartingToday(today),
@@ -22,6 +28,14 @@ export async function confirmBookings() {
 				`bookings: ${bookings} (${typeof bookings})`,
 			].join('. '));
 		}
+
+		await log([
+			'INFO',
+			'ConfirmBooking',
+			'Selected bookings',
+			`Time: ${today.toLocaleString()}`,
+			`Bookings: ${JSON.stringify(bookings)}`,
+		]);
 
 		if (bookings.length === 0) {
 			return;
