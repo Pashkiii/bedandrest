@@ -87,13 +87,7 @@ export class RealtyCalendarAdapter {
 	}
 
 	#extractClientId() {
-		const clientId = this.booking['client_id'];
-
-		if (isNaN(clientId) || !clientId) {
-			throw new ParseDataError(`Parse "clientId" error. Invalid value: ${this.booking['client_id']}.`);
-		}
-
-		return clientId;
+		return this.booking['client_id'] || null;
 	}
 
 	#extractApartmentId() {
