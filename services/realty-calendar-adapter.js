@@ -87,7 +87,15 @@ export class RealtyCalendarAdapter {
 	}
 
 	#extractClientId() {
-		return this.booking['client_id'] || null;
+		let clientId = this.booking['client_id'];
+		if (typeof clientId !== 'number') {
+			clientId = parseInt(clientId);
+		}
+		if (isNaN(clientId)) {
+			clientId = null;
+		}
+
+		return clientId;
 	}
 
 	#extractApartmentId() {
