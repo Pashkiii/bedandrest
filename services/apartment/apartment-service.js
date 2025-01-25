@@ -1,6 +1,6 @@
 import { apartmentDb } from '../../model/storage/apartment-db.js';
 import { Apartment } from '../../model/apartment/apartment.js';
-import { log } from "../../model/logger/index.js";
+import { log } from '../../model/logger/index.js';
 
 export class ApartmentService {
     static async getApartmentsList() {

@@ -1,39 +1,108 @@
-<form id="apartment">
-  <div class="mb-3">
-    <h3>№{{apartment.id}}</h3>
-  </div>
-  <div class="mb-3">
-    <label for="address" class="form-label">Адрес</label>
-    <input id="address" class="form-control form-control-sm" value="{{apartment.address}}" type="text" required />
-  </div>
-  <div class="mb-3">
-    <label for="ads" class="form-label">Ссылка на рекламу</label>
-    <input id="ads" class="form-control form-control-sm" value="{{apartment.ads}}" type="text" />
-  </div>
-  <div class="mb-3">
-    <label for="inHour" class="form-label">Время заезда</label>
-    <input id="inHour" class="form-control form-control-sm" type="text" value="{{apartment.inHour}}" required />
-  </div>
-  <div class="mb-3">
-    <label for="outHour" class="form-label">Время выезда</label>
-    <input id="outHour" class="form-control form-control-sm" type="text" value="{{apartment.outHour}}" required />
-  </div>
-  <div class="mb-3">
-    <label for="deposit" class="form-label">Сумма предоплаты</label>
-    <input id="deposit" class="form-control form-control-sm" type="number" step="1" min="0" value="{{apartment.deposit}}" required />
-  </div>
-  <div class="mb-3">
-    <label for="linens" class="form-label">Кол-во комплектов постельного белья</label>
-    <input id="linens" class="form-control form-control-sm" type="number" step="1" min="0" value="{{apartment.linens}}" required />
-  </div>
-  <div class="mb-3">
-    <label for="thingsLink" class="form-label">Ссылка на фото квартиры</label>
-    <input id="thingsLink" class="form-control form-control-sm" type="text" value="{{apartment.thingsLink}}" required />
-  </div>
-  <div class="mb-3">
-    <label>Ссылка WiFi</label>
-    <div>
-      {{apartment.wifiLink}}
-    </div>
-  </div>
+{{#if apartment.archive.value}}
+<div class="alert alert-danger" role="alert">
+	Квартира находится в архиве.
+</div>
+{{/if}}
+<form id="apartment" method="post">
+	<div class="mb-3">
+		<h3>№ {{apartment.id.value}}</h3>
+	</div>
+	<div class="mb-3">
+		<label for="address" class="form-label">Адрес</label>
+		<div class="input-group has-validation">
+			<input id="address" name="address" class="form-control form-control-sm" value="{{apartment.address.value}}"
+			       type="text" required/>
+			{{#if apartment.address.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.address.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="ads" class="form-label">Ссылка на рекламу</label>
+		<div class="input-group has-validation">
+			<input id="ads" name="ads" class="form-control form-control-sm" value="{{apartment.ads.value}}" type="text"/>
+			{{#if apartment.ads.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.ads.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="inHour" class="form-label">Время заезда</label>
+		<div class="input-group has-validation">
+			<input id="inHour" name="inHour" class="form-control form-control-sm" type="text"
+			       value="{{apartment.inHour.value}}" required/>
+			{{#if apartment.inHour.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.inHour.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="outHour" class="form-label">Время выезда</label>
+		<div class="input-group has-validation">
+			<input id="outHour" name="outHour" class="form-control form-control-sm" type="text"
+			       value="{{apartment.outHour.value}}" required/>
+			{{#if apartment.outHour.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.outHour.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="deposit" class="form-label">Сумма предоплаты</label>
+		<div class="input-group has-validation">
+			<input id="deposit" name="deposit" class="form-control form-control-sm" type="number" step="1" min="0"
+			       value="{{apartment.deposit.value}}" required/>
+			{{#if apartment.deposit.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.deposit.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="linens" class="form-label">Кол-во комплектов постельного белья</label>
+		<div class="input-group has-validation">
+			<input id="linens" name="linens" class="form-control form-control-sm" type="number" step="1" min="0"
+			       value="{{apartment.linens.value}}" required/>
+			{{#if apartment.linens.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.linens.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="thingsLink" class="form-label">Ссылка на фото квартиры</label>
+		<div class="input-group has-validation">
+			<input id="thingsLink" name="thingsLink" class="form-control form-control-sm" type="text"
+			       value="{{apartment.thingsLink.value}}" required/>
+			{{#if apartment.thingsLink.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.thingsLink.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label>Ссылка WiFi</label>
+		<div>
+			{{apartment.wifiLink.value}}
+		</div>
+	</div>
+	<p>
+		{{#if error}}
+			{{error}}
+		{{/if}}
+	</p>
+	<div class="apartment__form-footer-bar">
+		<input class="btn btn-primary" type="submit" value="Сохранить"/>
+		<button hidden="hidden" id="to-archive-btn" type="button" class="btn btn-danger">В архив</button>
+	</div>
 </form>

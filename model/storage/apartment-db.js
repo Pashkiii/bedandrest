@@ -38,6 +38,16 @@ class ApartmentDb extends Supabase {
 
         return [error, data?.[0] || null];
     }
+
+    async updateApartment(apartmentId, apartmentUpdate) {
+        const { error, data: apartmentsDto,emt } = await this.client
+          .from(this.table)
+          .update(apartmentUpdate)
+          .eq('id', apartmentId)
+          .select();
+
+        return { error, apartmentsDto };
+    }
 }
 
 const apartmentDb = new ApartmentDb();

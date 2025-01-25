@@ -1,4 +1,6 @@
-import { ApartmentService } from "../../services/apartment/apartment-service.js";
+import { validationResult } from 'express-validator';
+import { ApartmentService } from '../../services/apartment/apartment-service.js';
+import { ApartmentActionsService } from '../../services/apartment/apartment-actions-service.js';
 import { toApartmentView } from '../../model/apartment/apartment.js';
 
 export class ApartmentController {
@@ -36,8 +38,48 @@ export class ApartmentController {
 
     }
 
-    async updateApartment() {
+    static async updateApartment(request, response) {
+        const apartmentId = parseInt(request.params.id, 10);
+        if (!apartmentId) {
+            response.send(404);
 
+            return;
+        }
+
+        const result = validationResult(request);
+
+        if (result?.errors?.length > 0) {
+            const apartmentViewModel = toApartmentView({
+                id: apartmentId,
+                ...request.body,
+            }, result?.errors || []);
+            response.render('apartment.hbs', {
+                apartment: apartmentViewModel
+            });
+
+            return;
+        }
+
+        const apartment = await ApartmentActionsService.updateApartment({
+            id: apartmentId,
+            ...request.body,
+        });
+
+        if (!apartment) {
+            response.render('apartment.hbs', {
+                apartment: toApartmentView({
+                    id: apartmentId,
+                    ...request.body,
+                }),
+                error: 'Не удалось сохранить изменения',
+            });
+
+            return;
+        }
+
+        response.render('apartment.hbs', {
+            apartment: toApartmentView(apartment),
+        });
     }
 
     async toArchiveApartment(id) {

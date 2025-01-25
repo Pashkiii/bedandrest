@@ -28,9 +28,23 @@ export class Apartment {
 	}
 }
 
-export function toApartmentView(apartment) {
-	return {
-		...apartment,
-		wifiLink: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartment.id)}`,
+export function toApartmentView(apartmentModel, errors = []) {
+	const apartment = {
+		wifiLink: {
+			value: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartmentModel.id)}`,
+		},
 	};
+
+	const getErrorByPath = (path, errors) => {
+		return errors.find((error) => error.path === path);
+	};
+
+	for (const key in apartmentModel) {
+		apartment[key] = {
+			value: apartmentModel[key],
+			error: getErrorByPath(key, errors) || null,
+		};
+	}
+
+	return apartment;
 }
