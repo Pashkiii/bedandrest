@@ -6,6 +6,7 @@ import hbs from 'hbs';
 import expressHbs from 'express-handlebars';
 
 import { apartmentRouter } from '../routes/apartment-router.js';
+import { apiApartmentRouter} from '../routes/api-apartment-router.js';
 import { bookingRouter } from '../routes/booking-router.js';
 import { apiRouter } from '../routes/api-router.js';
 import { wifiRouter } from '../routes/wifi-router.js';
@@ -33,6 +34,7 @@ app.use('/apartments', apartmentRouter);
 app.use('/bookings', bookingRouter);
 app.use('/wifi', wifiRouter);
 app.use('/api', apiRouter);
+app.use('/api/apartment', apiApartmentRouter);
 
 app.get('/', function (req, response) {
 	response.redirect('/bookings');

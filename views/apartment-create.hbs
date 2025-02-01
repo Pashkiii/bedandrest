@@ -1,0 +1,125 @@
+<div>
+	<form id="apartment-create-form" method="post">
+		<div class="mb-3">
+			<h3>Создание квартиры</h3>
+		</div>
+		<div class="mb-3">
+			<label for="id" class="form-label">ID из RealtyCalendar</label>
+			<div class="input-group has-validation">
+				<input id="id"
+				       name="id"
+				       class="form-control form-control-sm"
+				       value=""
+				       type="number"
+				       min="0"
+				       required
+				/>
+				<div id="id-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="address" class="form-label">Адрес</label>
+			<div class="input-group has-validation">
+				<input id="address"
+				       name="address"
+				       class="form-control form-control-sm"
+				       value=""
+				       type="text"
+				       required
+				/>
+				<div id="address-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="ads" class="form-label">Ссылка на рекламу</label>
+			<div class="input-group has-validation">
+				<input id="ads"
+				       name="ads"
+				       class="form-control form-control-sm"
+				       value=""
+				       type="text"
+				/>
+				<div id="ads-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="inHour" class="form-label">Время заезда</label>
+			<div class="input-group has-validation">
+				<input id="inHour"
+				       name="inHour"
+				       class="form-control form-control-sm"
+				       type="text"
+				       value=""
+				       required
+				/>
+				<div id="inHour-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="outHour" class="form-label">Время выезда</label>
+			<div class="input-group has-validation">
+				<input id="outHour" name="outHour" class="form-control form-control-sm" type="text"
+				       value="" required/>
+				<div id="outHour-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="deposit" class="form-label">Сумма предоплаты</label>
+			<div class="input-group has-validation">
+				<input
+						id="deposit"
+						name="deposit"
+						class="form-control form-control-sm"
+						type="number"
+						step="1"
+						min="0"
+						value=""
+						required
+				/>
+				<div id="deposit-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="linens" class="form-label">Кол-во комплектов постельного белья</label>
+			<div class="input-group has-validation">
+				<input
+						id="linens"
+						name="linens"
+						class="form-control form-control-sm"
+						type="number"
+						step="1"
+						min="0"
+						value=""
+						required
+				/>
+				<div id="linens-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="thingsLink" class="form-label">Ссылка на фото квартиры</label>
+			<div class="input-group has-validation">
+				<input
+						id="thingsLink"
+						name="thingsLink"
+						class="form-control form-control-sm"
+						type="text"
+						value=""
+						required
+				/>
+				<div id="thingsLink-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+
+		<div id="error-alert" class="hidden form-error alert alert-danger" role="alert">
+
+		</div>
+		<div class="apartment__form-footer-bar">
+			<button class="btn btn-primary" type="submit">Создать</button>
+			<div class="spinner-border hidden" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</form>
+
+	<script src="/script/apartment-create.js" type="application/javascript"></script>
+</div>

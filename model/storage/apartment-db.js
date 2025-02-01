@@ -1,53 +1,62 @@
 import { Supabase } from './base.js';
 
 class ApartmentDb extends Supabase {
-    constructor() {
-        super();
-        this.table = 'apartments';
-    }
+	constructor() {
+		super();
+		this.table = 'apartments';
+	}
 
-    async getAll() {
-        const { error, count, data: apartments } = await this.client
-            .from(this.table)
-            .select();
+	async getAll() {
+		const { error, count, data: apartments } = await this.client
+			.from(this.table)
+			.select();
 
-        return { error, apartments };
-    }
+		return { error, apartments };
+	}
 
-    async getApartmentList() {
-        const { error, count, data } = await this.client
-            .from(this.table)
-            .select()
-            .eq('archive', false);
+	async getApartmentList() {
+		const { error, count, data } = await this.client
+			.from(this.table)
+			.select()
+			.eq('archive', false);
 
-        return [error, data];
-    }
+		return [error, data];
+	}
 
-    async getArchiveApartmentsList() {
-        const { error, count, data, status } = await this.client
-            .from(this.table)
-            .select()
-            .eq('archive', false);
-    }
+	async getArchiveApartmentsList() {
+		const { error, count, data, status } = await this.client
+			.from(this.table)
+			.select()
+			.eq('archive', false);
+	}
 
-    async getById(apartmentId) {
-        const { error, data } = await this.client
-            .from(this.table)
-            .select()
-            .eq('id', apartmentId);
+	async getById(apartmentId) {
+		const { error, data } = await this.client
+			.from(this.table)
+			.select()
+			.eq('id', apartmentId);
 
-        return [error, data?.[0] || null];
-    }
+		return [error, data?.[0] || null];
+	}
 
-    async updateApartment(apartmentId, apartmentUpdate) {
-        const { error, data: apartmentsDto,emt } = await this.client
-          .from(this.table)
-          .update(apartmentUpdate)
-          .eq('id', apartmentId)
-          .select();
+	async updateApartment(apartmentId, apartmentUpdate) {
+		const { error, data: apartmentsDto, emt } = await this.client
+			.from(this.table)
+			.update(apartmentUpdate)
+			.eq('id', apartmentId)
+			.select();
 
-        return { error, apartmentsDto };
-    }
+		return { error, apartmentsDto };
+	}
+
+	async createApartment(apartment) {
+		const { error, data } = await this.client
+			.from(this.table)
+			.insert(apartment)
+			.select();
+
+		return { error, data };
+	}
 }
 
 const apartmentDb = new ApartmentDb();

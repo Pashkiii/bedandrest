@@ -16,3 +16,12 @@
 .bg-navbar {
     background-color: var(--bs-primary);
 }
+
+.apartment__form-footer-bar {
+    display: flex;
+    gap: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
