@@ -10,6 +10,7 @@
 		<th scope="col">Кол-во белья</th>
 		<th scope="col">Депозит</th>
 		<th style="max-width: 220px" scope="col">Ссылка на фото</th>
+		<th style="max-width: 220px" scope="col">Ссылка на карту</th>
 		<th style="max-width: 220px" scope="col">Ссылка на WiFi</th>
 	</tr>
 	</thead>
@@ -29,6 +30,11 @@
 			<td>
 				<a style="max-width: 220px;overflow-wrap: break-word;font-size: 12px;" href="{{this.thingsLink.value}}">
 					{{this.thingsLink.value}}
+				</a>
+			</td>
+			<td>
+				<a style="max-width: 220px;overflow-wrap: anywhere;font-size: 12px;" href="{{this.mapPoint.value}}">
+					{{this.mapPoint.value}}
 				</a>
 			</td>
 			<td style="max-width: 220px;overflow-wrap: break-word;font-size: 12px;">

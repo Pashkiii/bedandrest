@@ -140,9 +140,20 @@ body {
     padding: 15px;
     border-bottom: 1px solid #d5d8dc;
     border-radius: 7px;
-
 }
 
 .wifi-block__wifi__instruction p {
     text-align: center;
+}
+
+.how-get-to-us-block {
+    margin: 1rem 0 2rem 0;
+    width: 100%;
+}
+
+.how-get-to-us-block h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0;
+    word-spacing: 0;
 }

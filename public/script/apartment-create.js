@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			deposit: parseInt(elements.deposit.value, 10),
 			linens: parseInt(elements.linens.value, 10),
 			thingsLink: elements.thingsLink.value,
+			mapPoint: elements.mapPoint.value,
 		};
 	}
 

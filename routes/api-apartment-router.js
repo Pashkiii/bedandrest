@@ -10,13 +10,14 @@ apiApartmentRouter.post(
 	'/create',
 	jsonParser,
 	body('id').notEmpty().isInt(),
-	body('address').notEmpty().escape(),
-	body('ads').isURL({ protocols: ['https'] }),
+	body('address').notEmpty(),
+	body('ads'),
 	body('inHour').notEmpty().isInt(),
 	body('outHour').notEmpty().isInt(),
 	body('deposit').notEmpty().isNumeric(),
 	body('linens').notEmpty().isInt(),
 	body('thingsLink').notEmpty().isURL({ protocols: ['https'] }),
+	body('mapPoint').notEmpty().isURL({ protocols: ['https'] }),
 	async (req, res) => {
 		try {
 			await ApartmentController.addApartment(req, res);

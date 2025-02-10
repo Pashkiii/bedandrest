@@ -1,7 +1,7 @@
 {{#if apartment.archive.value}}
-<div class="alert alert-danger" role="alert">
-	Квартира находится в архиве.
-</div>
+	<div class="alert alert-danger" role="alert">
+		Квартира находится в архиве.
+	</div>
 {{/if}}
 <form id="apartment" method="post">
 	<div class="mb-3">
@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="mb-3">
-		<label for="deposit" class="form-label">Сумма предоплаты</label>
+		<label for="deposit" class="form-label">Депозит</label>
 		<div class="input-group has-validation">
 			<input id="deposit" name="deposit" class="form-control form-control-sm" type="number" step="1" min="0"
 			       value="{{apartment.deposit.value}}" required/>
@@ -81,13 +81,37 @@
 	<div class="mb-3">
 		<label for="thingsLink" class="form-label">Ссылка на фото квартиры</label>
 		<div class="input-group has-validation">
-			<input id="thingsLink" name="thingsLink" class="form-control form-control-sm" type="text"
+			<input id="thingsLink" name="thingsLink" class="form-control form-control-sm" type="url"
 			       value="{{apartment.thingsLink.value}}" required/>
 			{{#if apartment.thingsLink.error}}
 				<div class="invalid-feedback" style="display: block">
 					{{apartment.thingsLink.error.msg}}
 				</div>
 			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="mapPoint" class="form-label">Ссылка на карту</label>
+		<div class="input-group has-validation">
+			<input
+					id="mapPoint"
+					name="mapPoint"
+					class="form-control form-control-sm"
+					type="url"
+					value="{{apartment.mapPoint.value}}"
+					required
+			/>
+			{{#if apartment.mapPoint.error}}
+				<div class="invalid-feedback" style="display: block">
+					{{apartment.mapPoint.error.msg}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="mb-3">
+		<label>Ссылка на карту</label>
+		<div>
+			{{apartment.mapLink.value}}
 		</div>
 	</div>
 	<div class="mb-3">

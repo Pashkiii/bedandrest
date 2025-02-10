@@ -37,13 +37,14 @@ apartmentRouter.get('/:id', async function (req, response) {
 apartmentRouter.post(
 	'/:id',
 	urlencodedParser,
-	body('address').notEmpty().escape(),
-	body('ads').isURL({ protocols: ['https'] }),
+	body('address').notEmpty(),
+	body('ads'),
 	body('inHour').notEmpty().isInt(),
 	body('outHour').notEmpty().isInt(),
 	body('deposit').isNumeric(),
 	body('linens').notEmpty().isInt(),
 	body('thingsLink').isURL({ protocols: ['https'] }),
+	body('mapPoint').isURL({ protocols: ['https'] }),
 	async function (request, response) {
 		await ApartmentController.updateApartment(request, response);
 	}

@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<div class="mb-3">
-			<label for="deposit" class="form-label">Сумма предоплаты</label>
+			<label for="deposit" class="form-label">Депозит</label>
 			<div class="input-group has-validation">
 				<input
 						id="deposit"
@@ -102,11 +102,25 @@
 						id="thingsLink"
 						name="thingsLink"
 						class="form-control form-control-sm"
-						type="text"
+						type="url"
 						value=""
 						required
 				/>
 				<div id="thingsLink-error" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="mapPoint" class="form-label">Ссылка на карту</label>
+			<div class="input-group has-validation">
+				<input
+						id="mapPoint"
+						name="mapPoint"
+						class="form-control form-control-sm"
+						type="url"
+						value=""
+						required
+				/>
+				<div id="mapPoint-error" class="invalid-feedback"></div>
 			</div>
 		</div>
 

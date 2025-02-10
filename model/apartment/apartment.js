@@ -10,6 +10,7 @@ export class Apartment {
 		this.outHour = apartment.outHour;
 		this.deposit = apartment.deposit;
 		this.thingsLink = apartment.thingsLink;
+		this.mapPoint = apartment.mapPoint;
 		this.archive = apartment.archive;
 	}
 
@@ -23,6 +24,7 @@ export class Apartment {
 			outHour: apartmentDto['out_hour'],
 			deposit: apartmentDto['deposit'],
 			thingsLink: apartmentDto['things_link'],
+			mapPoint: apartmentDto['map_point'],
 			archive: apartmentDto['archive'],
 		});
 	}
@@ -30,6 +32,9 @@ export class Apartment {
 
 export function toApartmentView(apartmentModel, errors = []) {
 	const apartment = {
+		mapLink: {
+			value: `https://bedandrest.vercel.app/apt/${CryptoId.encode(apartmentModel.id)}`,
+		},
 		wifiLink: {
 			value: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartmentModel.id)}`,
 		},

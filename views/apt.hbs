@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="/style/wifi.css" rel="stylesheet"/>
+	<title>Document</title>
+</head>
+<body>
+<div class="wifi-page">
+	<div class="wifi-content">
+		<section class="wifi-block">
+			<img class="wifi-block__logo" decoding="async" height="110" width="145" src="/bed-and-rest-logo.png"
+			     alt="BedAndRest logo"/>
+			<div class="wifi-block__title">
+				<span>Дорогой гость! Мы рады приветствовать Вас в наших апартаментах</span>
+			</div>
+			{{#if apartment.mapPoint}}
+				<div class="wifi-block__wifi">
+					<div class="how-get-to-us-block">
+						<h2>Как добраться до нас?</h2>
+						<a class="wifi-button --btn" href="{{apartment.mapPoint}}" role="button">Построить маршрут</a>
+					</div>
+				</div>
+			{{/if}}
+		</section>
+		<iframe
+				id="wifi-abs"
+				height="3550px"
+				width="100%"
+				src="https://bedandrest.ru/dopolnitelnye-predlozheniya/"></iframe>
+	</div>
+</div>
+
+<script src="/script/wifi.js" type="application/javascript"></script>
+</body>
+</html>

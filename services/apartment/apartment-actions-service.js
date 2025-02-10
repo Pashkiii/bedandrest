@@ -143,6 +143,7 @@ const apartmentUpdateMap = Object.freeze({
 	outHour: 'out_hour',
 	deposit: 'deposit',
 	thingsLink: 'things_link',
+	mapPoint: 'map_point',
 });
 
 const apartmentCreateMap = Object.freeze({
