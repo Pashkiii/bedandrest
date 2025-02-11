@@ -25,3 +25,12 @@
 .hidden {
     display: none !important;
 }
+
+.column-width-limiter {
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    font-size: 12px;
+    text-overflow: ellipsis;
+}

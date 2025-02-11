@@ -1,4 +1,4 @@
-const key = parseInt(process.env.WIFI_SECURE_KEY || '', 10) || 0;
+const key = process.env.WIFI_SECURE_KEY || '';
 
 export class CryptoId {
 	/**

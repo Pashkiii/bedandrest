@@ -40,6 +40,8 @@ export function toApartmentView(apartmentModel, errors = []) {
 		},
 	};
 
+	console.log(apartment)
+
 	const getErrorByPath = (path, errors) => {
 		return errors.find((error) => error.path === path);
 	};
