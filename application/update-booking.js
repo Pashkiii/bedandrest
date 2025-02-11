@@ -30,12 +30,12 @@ export async function updateBooking(bookingModel) {
 			}
 		}
 
-		if (!booking.secondMessageSent) {
-			const secondMsgSendingResult = await sendSecondMessage(bookingModel, apartment);
-			if (secondMsgSendingResult.done) {
-				bookingModel.secondMessageSent = true;
-			}
-		}
+		// if (!booking.secondMessageSent) {
+		// 	const secondMsgSendingResult = await sendSecondMessage(bookingModel, apartment);
+		// 	if (secondMsgSendingResult.done) {
+		// 		bookingModel.secondMessageSent = true;
+		// 	}
+		// }
 
 		await BookingActionService.updateBooking(bookingModel);
 	} catch (error) {
