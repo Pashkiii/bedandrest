@@ -23,7 +23,7 @@ export class BookingDb extends Supabase {
 			.from(this.table)
 			.select()
 			.eq('id', bookingId);
-		const booking = Array.isArray(data) && data.length > 0 ? data[0] : null;
+		const booking = data?.[0] || null;
 
 		return { error, booking };
 	}
