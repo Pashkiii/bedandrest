@@ -6,9 +6,7 @@ import ViteExpress from 'vite-express';
 import hbs from 'hbs';
 import expressHbs from 'express-handlebars';
 
-import { apartmentRouter } from '../routes/apartment-router.js';
 import { apiApartmentRouter } from '../routes/api-apartment-router.js';
-import { bookingRouter } from '../routes/booking-router.js';
 import { apiRouter } from '../server/routes/api-router.js';
 import { aptRouter } from '../routes/apt-router.js';
 import { wifiRouter } from '../routes/wifi-router.js';
@@ -28,13 +26,13 @@ const distPath = path.join(path.resolve(), "dist");
 app.use(express.static('public'));
 
 app.engine('hbs', expressHbs.engine({
-	layoutsDir: 'views/layouts',
-	defaultLayout: 'layout',
+	// layoutsDir: 'views/layouts',
+	// defaultLayout: 'layout',
 	extname: 'hbs',
 }));
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'hbs');
-hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+// hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 // app.use('/apartments', apartmentRouter);
 // app.use('/bookings', bookingRouter);

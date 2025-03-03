@@ -16,12 +16,16 @@ const parseManifest = async () => {
 };
 
 appRouter.get('/*', async (_req, _res) => {
+    const manifest = await parseManifest();
     const data = {
-        environment,
-        manifest: await parseManifest(),
+        isProduction: environment === 'production',
+        js: manifest['src/main.js'].file || '',
+        css1: manifest['src/main.css']?.file || '',
+        css2: manifest['src/main.js']?.css?.[0] || '',
+        layout: false,
     };
 
-    _res.render('index.html.ejs', data);
+    _res.render('index.hbs', data);
 });
 
 export { appRouter };

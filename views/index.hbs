@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {{#if isProduction }}
+        <link rel="stylesheet" href="{{css1}}"></link>
+        <link rel="stylesheet" href="{{css2}}"></link>
+    {{/if}}
+</head>
+<body>
+    <div id="app"></div>
+    {{#if isProduction}}
+        <script type="module" src="{{js}}"></script>
+    {{else}}
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="http://localhost:5173/src/main.js"></script>
+    {{/if}}
+</body>
+</html>
