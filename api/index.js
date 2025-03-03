@@ -32,7 +32,7 @@ app.engine('hbs', expressHbs.engine({
 }));
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'hbs');
-// hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 // app.use('/apartments', apartmentRouter);
 // app.use('/bookings', bookingRouter);
