@@ -1,0 +1,159 @@
+:root {
+    --block-color: #FFFFFF;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
+}
+
+.wifi-page {
+    display: flex;
+    justify-content: center;
+}
+
+.wifi-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 400px;
+    min-width: 337px;
+    background-color: #F5F5F5;
+}
+
+.wifi-block__logo {
+    aspect-ratio: auto 203 / 154;
+    width: 145px;
+}
+
+.wifi-block__title {
+    color: #808080;
+    font-size: 12px;
+    margin: 14px 0;
+    text-align: center;
+}
+
+.wifi-block__wifi {
+    background-color: #F5F5F5;
+    padding: 0 16px 0 16px;
+    width: 90%;
+}
+
+.wifi-block__wifi-wrap {
+    background-color: var(--block-color);
+    border-radius: 18px 18px 18px 18px;
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    padding: 28px 12px 28px 12px;
+    gap: 7px;
+    width: 100%;
+}
+
+.wifi-block__wifi__title {
+    text-align: center;
+    color: #1E1E1E;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: bolder;
+}
+
+.wifi-block__wifi-row {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+#wifi-abs {
+    border: none;
+    min-height: 100%;
+    min-width: 337px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.wifi-block,
+.wifi-block__wifi,
+.wifi-block__wifi-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.wifi-button {
+    line-height: 1;
+    padding: 6% 0 6% 0;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s;
+}
+
+.wifi-button:hover {
+    cursor: pointer;
+}
+
+.wifi-button.--btn {
+    background: #0284B5;
+    border-radius: 7px;
+    box-shadow: none;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    fill: #fff;
+    font-size: 16px;
+    width: 100%;
+}
+
+.wifi-button.--link {
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: buttontext;
+    text-decoration: none;
+    background: var(--block-color);
+    border: none;
+    font-size: 13px;
+    font-weight: 400;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.wifi-block__wifi__instruction-collapse {
+    display: none;
+    max-height: 0;
+    transition-property: height;
+    transition-duration: 1s;
+    height: auto;
+}
+.wifi-block__wifi__instruction-collapse.--show {
+    display: block;
+    max-height: 100%;
+}
+
+.wifi-block__wifi__instruction {
+    border-width: 0;
+    background-color: #EAEAEA;
+    font-size: 14px;
+    padding: 15px;
+    border-bottom: 1px solid #d5d8dc;
+    border-radius: 7px;
+}
+
+.wifi-block__wifi__instruction p {
+    text-align: center;
+}
+
+.how-get-to-us-block {
+    margin: 1rem 0 2rem 0;
+    width: 100%;
+}
+
+.how-get-to-us-block h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0;
+    word-spacing: 0;
+}

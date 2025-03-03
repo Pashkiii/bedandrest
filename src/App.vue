@@ -1,0 +1,103 @@
+<script setup>
+import AppLayout from './views/layout/AppLayout.vue';
+import SidebarMenu from './views/layout/SidebarMenu.vue'
+</script>
+
+<template>
+  <AppLayout>
+    <template #sidebar>
+      <SidebarMenu />
+    </template>
+    <RouterView />
+  </AppLayout>
+</template>
+
+<style>
+:root {
+  --text-color: #334155;
+  --surface-ground: #f1f5f9;
+}
+
+body {
+  font-family: Inter var, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.layout-wrapper {
+  min-height: 100vh;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+@media screen and (min-width: 1536px) {
+  .layout-wrapper {
+      max-width: 1536px;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .layout-wrapper {
+      max-width: 1280px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .layout-wrapper {
+      max-width: 1024px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .layout-wrapper {
+      max-width: 768px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .layout-wrapper {
+      max-width: 640px;
+  }
+}
+
+.layout-box {
+  display: flex;
+  gap: .5rem;
+  padding: .5rem;
+}
+
+.layout-sidebar {
+  height: 100%;
+  padding: 0;
+  position: absolute;
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .layout-sidebar {
+      position: static;
+      display: block;
+  }
+}
+
+.layout-container {
+  display: flex;
+  padding-top: 0.1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  flex-direction: column;
+  flex: 1 1 0%;
+}
+</style>

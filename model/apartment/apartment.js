@@ -31,27 +31,9 @@ export class Apartment {
 }
 
 export function toApartmentView(apartmentModel, errors = []) {
-	const apartment = {
-		mapLink: {
-			value: `https://bedandrest.vercel.app/apt/${CryptoId.encode(apartmentModel.id)}`,
-		},
-		wifiLink: {
-			value: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartmentModel.id)}`,
-		},
+	return {
+		mapLink: `https://bedandrest.vercel.app/apt/${CryptoId.encode(apartmentModel.id)}`,
+		wifiLink: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartmentModel.id)}`,
+		...apartmentModel,
 	};
-
-	console.log(apartment)
-
-	const getErrorByPath = (path, errors) => {
-		return errors.find((error) => error.path === path);
-	};
-
-	for (const key in apartmentModel) {
-		apartment[key] = {
-			value: apartmentModel[key],
-			error: getErrorByPath(key, errors) || null,
-		};
-	}
-
-	return apartment;
 }
