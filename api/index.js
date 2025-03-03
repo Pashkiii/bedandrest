@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'node:url';
 import * as path from 'node:path';
 import express from 'express';
-import ViteExpress from 'vite-express';
 import hbs from 'hbs';
 import expressHbs from 'express-handlebars';
 
@@ -50,6 +49,6 @@ if (process.env.NODE_ENV === "production") {
 app.use(appRouter);
 app.use(router);
 
-const server = app.listen(port, async () => {
+app.listen(port, async () => {
 	console.log('Start app in port:', port);
 });
