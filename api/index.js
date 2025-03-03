@@ -53,5 +53,3 @@ app.use(router);
 const server = app.listen(port, async () => {
 	console.log('Start app in port:', port);
 });
-
-ViteExpress.bind(app, server);
