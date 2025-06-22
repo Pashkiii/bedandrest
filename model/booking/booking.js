@@ -6,6 +6,10 @@ export class Booking {
 }
 
 function getLocalDateString(date) {
+    if (!date) {
+        return '';
+    }
+
     const intl = new Intl.DateTimeFormat('ru-RU', {
         year: 'numeric',
         month: '2-digit',
@@ -73,16 +77,16 @@ export function extractBookingData(data) {
 export function convertBookingDto(bookingDto) {
     return {
         id: bookingDto.id,
-        apartmentId: bookingDto['apartment_id'],
-        clientId: bookingDto['client_id'],
-        clientName: bookingDto['client_name'],
-        beginDate: bookingDto['begin_date'],
-        endDate: bookingDto['end_date'],
+        apartmentId: bookingDto['apartmentId'],
+        clientId: bookingDto['clientId'],
+        clientName: bookingDto['clientName'],
+        beginDate: bookingDto['beginDate'],
+        endDate: bookingDto['endDate'],
         phone: bookingDto['phone'],
-        createDate: bookingDto['create_date'],
+        createDate: bookingDto['createDate'],
         data: bookingDto['data'],
-        firstMessageSent: Boolean(bookingDto['first_message_sended']),
-        secondMessageSent: Boolean(bookingDto['second_message_sended']),
-        thirdMessageSent: Boolean(bookingDto['third_message_sended']),
+        firstMessageSent: Boolean(bookingDto['firstMessageSended']),
+        secondMessageSent: Boolean(bookingDto['secondMessageSended']),
+        thirdMessageSent: Boolean(bookingDto['thirdMessageSended']),
     }
 }

@@ -1,16 +1,13 @@
-import { Supabase } from './base.js';
+import { WifiJournalModel } from '../model/wifi-journal.js' 
 
-export class WifiJournalDb extends Supabase {
-	constructor() {
-		super();
-		this.table = 'wifi_journal';
-	}
-
+export class WifiJournalDb{
 	async addWifiJournalEntry(wifiJournalEntryDto) {
-		const { error } = await this.client
-			.from(this.table)
-			.insert(wifiJournalEntryDto);
+		try {
+			await WifiJournalModel.create(wifiJournalEntryDto);
 
-		return { error };
+			return { error: null };
+		} catch (error) {
+			return { error };
+		}
 	}
 }

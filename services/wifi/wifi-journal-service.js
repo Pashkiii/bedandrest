@@ -1,15 +1,16 @@
 import { convertDateTimeToUtcTimezone } from '../../model/lib.js';
 import { WifiJournalDb } from '../../model/storage/wifi-journal-db.js';
 import { log } from '../../model/logger/index.js';
+import { WifiJournalModel } from '../../model/model/wifi-journal.js';
 
 /**
  * @param {WifiJournalEntry} wifiJournalEntry
  */
 function createWifiJournalEntryDto(wifiJournalEntry) {
 	return {
-		'apartment_id': wifiJournalEntry.apartmentId,
-		'booking_id': wifiJournalEntry.bookingId,
-		'create_date': convertDateTimeToUtcTimezone(wifiJournalEntry.createDate),
+		'apartmentId': wifiJournalEntry.apartmentId,
+		'bookingId': wifiJournalEntry.bookingId,
+		'createDate': convertDateTimeToUtcTimezone(wifiJournalEntry.createDate),
 		'data': wifiJournalEntry.data,
 	};
 }

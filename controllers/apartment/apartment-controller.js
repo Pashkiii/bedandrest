@@ -54,6 +54,7 @@ export class ApartmentController {
 		}
 
 		const { error, apartment } = await ApartmentActionsService.createApartment(request.body);
+
 		if (!apartment) {
 			response.status(400).send({
 				error: error || { status: 1, msg: 'Не удалось создать квартиру' },

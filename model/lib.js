@@ -15,7 +15,9 @@ export function convertDateToUtcTimezone(date) {
 
 export function convertDateTimeToUtcTimezone(date) {
     const d = new Date(date);
-    const [dateStr, timeStr] = d.toISOString().split('T');
 
-    return `${dateStr} ${timeStr.split('.')[0]}+00`;
+    return d.toISOString();
+    // const [dateStr, timeStr] = d.toISOString().split('T');
+
+    // return `${dateStr} ${timeStr.split('.')[0]}+00`;
 }

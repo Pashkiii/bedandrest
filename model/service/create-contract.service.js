@@ -9,14 +9,21 @@ export async function createContractService(book) {
 
     const result = await OkiDokiApi.contract(data);
     if (result[0] !== null) {
-        await log(['OkiDoki contract not created', JSON.stringify(result[0])].join('.'));
+        await log(
+          ['OkiDoki contract not created', JSON.stringify(result[0])],
+          {
+              separator: '.',
+              type: 'ERROR',
+          }
+        );
+
         return null;
     }
 
     const okiDokiResponse = result[1];
     if (okiDokiResponse.status === 0) {
         await sendMessageToManager(book, okiDokiResponse.link);
-        
+
         return null;
     }
 

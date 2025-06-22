@@ -1,21 +1,10 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-const tableName = 'log';
+import { LogModel } from '../model/log.js';
 
 async function insertLog(message) {
     try {
-        const { error } = await supabase
-            .from(tableName)
-            .insert({ 
-                message,
-            });
-
-        if (error) {
-            console.error('Supabase logger return error', error)
-        }
+        await LogModel.create(message);
     } catch (error) {
-        console.log("Supabase logger error", error);
+        console.log("DB logger error", error);
     }
 }
 
@@ -30,7 +19,14 @@ function getMessage(logData, options) {
     return logData.toString();
 }
 
-export async function log(message, options) {
+/**
+ *
+ * @param {string|string[]} message
+ * @param {{separator?: string, type?: string}} options
+ * @param {string} type
+ * @return {Promise<void>}
+ */
+export async function log(message, options = {}, type = null) {
     const d = new Date();
     const data = `${d.toLocaleString("ru-RU")}: ${getMessage(message, options)} \n`;
 
@@ -40,7 +36,10 @@ export async function log(message, options) {
     }
 
     try {
-        await insertLog(data);
+        await insertLog({
+            type: options?.type || type,
+            message: data
+        });
     } catch (error) {
         console.log("Logger error", error);
     }

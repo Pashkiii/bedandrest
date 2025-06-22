@@ -45,7 +45,7 @@ export class ApartmentActionsService {
 
 	static async createApartment(apartment) {
 		const apartmentCreateDto = apartmentCreateDtoMapper(apartment);
-		const { error, data } = await apartmentDb.createApartment(apartmentCreateDto);
+		const { error, apartment: data } = await apartmentDb.createApartment(apartmentCreateDto);
 
 		if (error) {
 			await log([
@@ -59,18 +59,7 @@ export class ApartmentActionsService {
 			return handleCreateApartmentError(error);
 		}
 
-		if (!Array.isArray(data)) {
-			await log([
-				'ERROR',
-				'ApartmentActionsService',
-				'Create apartment error',
-				`apartments not array: ${data}`
-			]);
-
-			return { apartment: null };
-		}
-
-		if (data.length === 0) {
+		if (!data) {
 			await log([
 				'ERROR',
 				'ApartmentActionsService',
@@ -82,7 +71,7 @@ export class ApartmentActionsService {
 		}
 
 		return {
-			apartment: Apartment.fromApartmentDto(data[0])
+			apartment: Apartment.fromApartmentDto(data)
 		};
 	}
 }
@@ -139,11 +128,11 @@ const apartmentUpdateMap = Object.freeze({
 	'ads': 'ads',
 	'address': 'address',
 	'linens': 'linens',
-	inHour: 'in_hour',
-	outHour: 'out_hour',
+	inHour: 'inHour',
+	outHour: 'outHour',
 	deposit: 'deposit',
-	thingsLink: 'things_link',
-	mapPoint: 'map_point',
+	thingsLink: 'thingsLink',
+	mapPoint: 'mapPoint',
 });
 
 const apartmentCreateMap = Object.freeze({

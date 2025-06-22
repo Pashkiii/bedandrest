@@ -20,11 +20,11 @@ export class Apartment {
 			address: apartmentDto['address'],
 			ads: apartmentDto['ads'],
 			linens: apartmentDto['linens'],
-			inHour: apartmentDto['in_hour'],
-			outHour: apartmentDto['out_hour'],
+			inHour: apartmentDto['inHour'],
+			outHour: apartmentDto['outHour'],
 			deposit: apartmentDto['deposit'],
-			thingsLink: apartmentDto['things_link'],
-			mapPoint: apartmentDto['map_point'],
+			thingsLink: apartmentDto['thingsLink'],
+			mapPoint: apartmentDto['mapPoint'],
 			archive: apartmentDto['archive'],
 		});
 	}
@@ -39,8 +39,6 @@ export function toApartmentView(apartmentModel, errors = []) {
 			value: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartmentModel.id)}`,
 		},
 	};
-
-	console.log(apartment)
 
 	const getErrorByPath = (path, errors) => {
 		return errors.find((error) => error.path === path);

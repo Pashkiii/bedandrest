@@ -1,11 +1,18 @@
-import { DeleteBookingService } from '../model/service/delete-booking-service.js';
+import { BookingActionService } from '../services/bookings/booking-action-service.js';
 import { log } from '../model/logger/index.js';
 
+/**
+ * @param {number} bookingId
+ * @return {Promise<void>}
+ */
 export async function deleteBooking(bookingId) {
 	try {
-		const deleteBookingService = new DeleteBookingService();
-		await deleteBookingService.deleteBooking({ id: bookingId });
+		await BookingActionService.deleteBooking(bookingId);
 	} catch (error) {
-		await log(`ERROR. DeleteBooking. ${error.name}: ${error.message}`);
+		await log(
+			`ERROR. DeleteBooking. ${error.name}: ${error.message}`,
+			{},
+			'ERROR',
+		);
 	}
 }

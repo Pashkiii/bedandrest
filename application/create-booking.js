@@ -15,6 +15,7 @@ export async function createBooking(bookingModel) {
 
 	try {
 		const apartment = await ApartmentService.getApartmentById(bookingModel.apartmentId);
+		console.log({ apartment });
 		bookingModel.createDate = syncDateToMoscow(new Date());
 
 		const firstMsgSendingResult = await sendFirstMessage(bookingModel, apartment);
@@ -40,6 +41,7 @@ export async function createBooking(bookingModel) {
 
 		await BookingActionService.insertBooking(bookingModel);
 	} catch (error) {
+		console.log({ error });
 		await log(`ERROR. CreateBooking. ${error.name}: ${error.message}`);
 	}
 }

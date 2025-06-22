@@ -1,104 +1,147 @@
-import { Supabase } from './base.js';
+import { Op } from 'sequelize';
 import { convertDateToUtcTimezone } from '../lib.js';
+import { BookingModel } from '../model/booking.js';
 
-export class BookingDb extends Supabase {
-	constructor() {
-		super();
-		this.table = 'barbook';
-	}
-
+export class BookingDb {
 	async getActiveBookings(beginDate) {
-		const beginDateUtc = convertDateToUtcTimezone(beginDate);
-		const { error, data, status } = await this.client
-			.from(this.table)
-			.select()
-			.gte('begin_date', beginDateUtc)
-			.order('begin_date', { ascending: true });
+		try {
+			const beginDateUtc = convertDateToUtcTimezone(beginDate);
+			const bookings = await BookingModel.findAll({
+				where: {
+					beginDate: beginDateUtc
+				},
+				order: [
+					['beginDate', 'ASC']
+				]
+			});
 
-		return { error, bookings: data };
+			return { error: null, bookings };
+		} catch (error) {
+			console.log({ getActiveBookingsError: error });
+
+			return { error, bookings: [] };
+		}
 	}
 
 	async getBookingById(bookingId) {
-		const { error, data } = await this.client
-			.from(this.table)
-			.select()
-			.eq('id', bookingId);
-		const booking = data?.[0] || null;
+		try {
+			const booking = await BookingModel.findByPk(bookingId);
 
-		return { error, booking };
+			return { error: null, booking };
+		} catch (error) {
+			return { error, booking: null };
+		}
 	}
 
 	async getBookingsByBeginDate(beginDate) {
-		const beginDateUtc = convertDateToUtcTimezone(beginDate);
-		const { error, data } = await this.client
-			.from(this.table)
-			.select()
-			.eq('begin_date', beginDateUtc);
+		try {
+			const beginDateUtc = convertDateToUtcTimezone(beginDate);
+			const bookings = await BookingModel.findAll({
+				where: {
+					beginDate: beginDateUtc,
+				}
+			});
 
-		return { error, bookings: data };
+			return { error: null, bookings };
+		} catch (error) {
+			return { error, bookings: [] };
+		}
 	}
 
 	/**
 	 * @param {Date} endDate
 	 */
 	async getBookingsByEndDate(endDate) {
-		const endDateUtc = convertDateToUtcTimezone(endDate);
-		const { error, data } = await this.client
-			.from(this.table)
-			.select()
-			.eq('end_date', endDateUtc);
+		try {
+			const endDateUtc = convertDateToUtcTimezone(endDate);
+			const bookings = await BookingModel.findAll({
+				endDate: endDateUtc
+			});
 
-		return { error, bookings: data };
+			return { error: null, bookings };
+		} catch (error) {
+			return { error, bookings: [] }
+		}
 	}
 
 	/**
 	 * @param {number} apartmentId
 	 * @param {Date} date
 	 */
-	async getActiveBookingByApartmentId(apartmentId, date){
-		const dateUtc = convertDateToUtcTimezone(date);
-		const { error, data } = await this.client
-			.from(this.table)
-			.select('id')
-			.eq('apartment_id', apartmentId)
-			.lte('begin_date', dateUtc)
-			.gte('end_date', dateUtc);
+	async getActiveBookingByApartmentId(apartmentId, date) {
+		try {
+			const dateUtc = convertDateToUtcTimezone(date);
+			const bookingIds = await BookingModel.findAll({
+				attributes: ['id'],
+				where: {
+					apartmentId,
+					beginDate: {
+						[Op.lte]: dateUtc
+					},
+					endDate: {
+						[Op.gte]: dateUtc
+					}
+				}
+			});
 
-		return { error, bookingIds: data }
+			return { error: null, bookingIds }
+		} catch (error) {
+			return { error, bookingIds: [] }
+		}
 	}
 
-	async addBooking(booking) {
-		const { error, status } = await this.client
-			.from(this.table)
-			.insert(booking);
+	async addBooking(bookingDto) {
+		try {
+			const model = await BookingModel.create(bookingDto)
 
-		return { error };
+			return { error: null, booking: model.dataValues };
+		} catch (error) {
+			return { error };
+		}
 	}
 
-	async updateBooking(bookingId, booking) {
-		const { error, status } = await this.client
-			.from(this.table)
-			.update(booking)
-			.eq('id', bookingId);
+	async updateBooking(bookingId, bookingDto) {
+		try {
+			const model = await BookingModel.update(
+				bookingDto,
+				{
+					where: {
+						id: bookingId
+					}
+				}
+			);
 
-		return { error };
+			return { error: null };
+		} catch (error) {
+			return { error };
+		}
 	}
 
 	async updateBookings(bookingsDto) {
-		const { error, status } = await this.client
-			.from(this.table)
-			.upsert(bookingsDto)
-			.select();
+		try {
+			const model = await BookingModel.upsert(
+				bookingsDto
+			);
+			console.log({ model });
 
-		return { error };
+			return { error: null };
+		} catch (error) {
+			return { error };
+		}
 	}
 
 	async deleteBooking(bookingId) {
-		const { error, status } = await this.client
-			.from(this.table)
-			.delete()
-			.eq('id', bookingId);
+		try {
+			const model = await BookingModel.destroy({
+				where: {
+					id: bookingId
+				}
+			});
+			console.log({ deleteModel: model });
 
-		return { error };
+			return { error: null }
+		} catch (error) {
+			return { error };
+		}
 	}
 }

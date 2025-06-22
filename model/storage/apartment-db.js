@@ -1,61 +1,79 @@
-import { Supabase } from './base.js';
+import { ApartmentModel } from '../model/apartment.js';
 
-class ApartmentDb extends Supabase {
-	constructor() {
-		super();
-		this.table = 'apartments';
-	}
-
+class ApartmentDb {
 	async getAll() {
-		const { error, count, data: apartments } = await this.client
-			.from(this.table)
-			.select();
+		try {
+			const apartments = await ApartmentModel.findAll({ raw: true });
 
-		return { error, apartments };
+			return { error: null, apartments };
+		} catch (error) {
+			return { error, apartments: [] };
+		}
 	}
 
 	async getApartmentList() {
-		const { error, count, data } = await this.client
-			.from(this.table)
-			.select()
-			.eq('archive', false);
+		try {
+			const apartments = await ApartmentModel.findAll({
+				where: { 'archive': false },
+				raw: true
+			});
 
-		return [error, data];
+			return [null, apartments];
+		} catch (error) {
+			return [error, []];
+		}
 	}
 
 	async getArchiveApartmentsList() {
-		const { error, count, data, status } = await this.client
-			.from(this.table)
-			.select()
-			.eq('archive', false);
+		try {
+			const apartments = await ApartmentModel.findAll({
+				where: { 'archive': true },
+				raw: true
+			});
+
+			return { error: null, apartments };
+		} catch (error) {
+			return { error, apartments: [] };
+		}
 	}
 
 	async getById(apartmentId) {
-		const { error, data } = await this.client
-			.from(this.table)
-			.select()
-			.eq('id', apartmentId);
+		try {
+			const apartment = await ApartmentModel.findByPk(apartmentId);
 
-		return [error, data?.[0] || null];
+			return [null, apartment || null];
+		} catch (error) {
+			return [error, null];
+		}
 	}
 
 	async updateApartment(apartmentId, apartmentUpdate) {
-		const { error, data: apartmentsDto, emt } = await this.client
-			.from(this.table)
-			.update(apartmentUpdate)
-			.eq('id', apartmentId)
-			.select();
+		try {
+			const apartmentsDto = await ApartmentModel.update(
+				apartmentUpdate,
+				{
+					where: { id: apartmentId },
+					returning: true,
+  					plain: true
+				}
+			);
 
-		return { error, apartmentsDto };
+			console.log({ apartmentsDto });
+
+			return { error, apartmentsDto };
+		} catch (error) {
+			return { error, apartmentsDto: null };
+		}
 	}
 
-	async createApartment(apartment) {
-		const { error, data } = await this.client
-			.from(this.table)
-			.insert(apartment)
-			.select();
-
-		return { error, data };
+	async createApartment(apartmentDto) {
+		try {
+			const apartment = await ApartmentModel.create(apartmentDto);
+			
+			return { error: null, apartment: apartment.dataValues };
+		} catch (error) {
+			return { error, apartment: null };
+		}
 	}
 }
 

@@ -11,6 +11,7 @@ export class ApiBookingController {
 		try {
 			const realtyCalendarAdapter = new RealtyCalendarAdapter(realtyCalendarData);
 			const statusCd = realtyCalendarAdapter.extractStatusCd();
+
 			if (statusCd !== 5) {
 				return;
 			}

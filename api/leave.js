@@ -10,6 +10,7 @@ export async function GET() {
     } catch (error) {
         await log(['Start job error', error]);
     }
+
     return new Response(`Hello from ${process.env.VERCEL_REGION}`);
 }
 

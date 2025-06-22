@@ -1,9 +1,9 @@
-import { DB } from '../model/db/index.js';
 import { CreateBookMessageCreator } from '../message/createBookMessageCreator.js';
 import { ConfirmBookMessageCreator } from '../message/confirmBookMessageCreator.js';
 import { sendMessage } from '../sender/index.js';
 import { log } from '../logger/index.js';
 import { createContractService } from './create-contract.service.js';
+import { BookingActionService } from '../../services/bookings/booking-action-service.js'
 
 export class CreateBookingService {
     async create(book) {
@@ -22,24 +22,24 @@ export class CreateBookingService {
 
             const data = {
                 id: book.id,
-                create_date: this.#convertToPostgresTime(today),
-                begin_date: this.#convertToPostgresTime(book.beginDate),
-                end_date: this.#convertToPostgresTime(book.endDate),
-                client_id: book.clientId,
-                client_name: book.clientName,
-                apartment_id: book.apartment.id,
+                createDate: this.#convertToPostgresTime(today),
+                beginDate: this.#convertToPostgresTime(book.beginDate),
+                endDate: this.#convertToPostgresTime(book.endDate),
+                clientId: book.clientId,
+                clientName: book.clientName,
+                apartmentId: book.apartment.id,
                 phone: book.phone,
-                first_message_sended: true,
-                second_message_sended: false,
+                firstMessageSended: true,
+                secondMessageSended: false,
                 data: typeof book.data === 'string' ? book.data : JSON.stringify(book.data)
             };
 
             if (this.#compareDate(book.beginDate, today)) {
                 await this.#sendConfirmMessage(book);
-                data.second_message_sended = true;
+                data.secondMessageSended = true;
             }
 
-            await DB.setBook(data);
+            await BookingActionService.insertBooking(data);
         } catch (error) {
             console.error('Create booking error', error);
             log(`CreateBookingService. Create booking error: ${JSON.stringify(error)}. Error message: ${error?.message}`);
