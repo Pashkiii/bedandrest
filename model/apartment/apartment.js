@@ -33,10 +33,10 @@ export class Apartment {
 export function toApartmentView(apartmentModel, errors = []) {
 	const apartment = {
 		mapLink: {
-			value: `https://bedandrest.vercel.app/apt/${CryptoId.encode(apartmentModel.id)}`,
+			value: `/apt/${CryptoId.encode(apartmentModel.id)}`,
 		},
 		wifiLink: {
-			value: `https://bedandrest.vercel.app/wifi/${CryptoId.encode(apartmentModel.id)}`,
+			value: `/wifi/${CryptoId.encode(apartmentModel.id)}`,
 		},
 	};
 
