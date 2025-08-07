@@ -23,7 +23,7 @@
 		<label for="ads" class="form-label">Ссылка на рекламу</label>
 		<div class="input-group has-validation">
 			<input id="ads" name="ads" class="form-control form-control-sm" value="{{apartment.ads.value}}"
-				type="text" />
+				type="url" />
 			{{#if apartment.ads.error}}
 			<div class="invalid-feedback" style="display: block">
 				{{apartment.ads.error.msg}}
@@ -34,7 +34,7 @@
 	<div class="mb-3">
 		<label for="inHour" class="form-label">Время заезда</label>
 		<div class="input-group has-validation">
-			<input id="inHour" name="inHour" class="form-control form-control-sm" type="text"
+			<input id="inHour" name="inHour" class="form-control form-control-sm" type="time"
 				value="{{apartment.inHour.value}}" required />
 			{{#if apartment.inHour.error}}
 			<div class="invalid-feedback" style="display: block">
@@ -46,7 +46,7 @@
 	<div class="mb-3">
 		<label for="outHour" class="form-label">Время выезда</label>
 		<div class="input-group has-validation">
-			<input id="outHour" name="outHour" class="form-control form-control-sm" type="text"
+			<input id="outHour" name="outHour" class="form-control form-control-sm" type="time"
 				value="{{apartment.outHour.value}}" required />
 			{{#if apartment.outHour.error}}
 			<div class="invalid-feedback" style="display: block">

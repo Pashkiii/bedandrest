@@ -49,27 +49,35 @@ class ApartmentDb {
 
 	async updateApartment(apartmentId, apartmentUpdate) {
 		try {
-			const apartmentsDto = await ApartmentModel.update(
-				apartmentUpdate,
-				{
-					where: { id: apartmentId },
-					returning: true,
-  					plain: true
-				}
-			);
+			const apartment = await this.#updateAndReturnApartment(apartmentId, apartmentUpdate);
 
-			console.log({ apartmentsDto });
-
-			return { error, apartmentsDto };
+			return {
+				error: null,
+				apartment
+			};
 		} catch (error) {
 			return { error, apartmentsDto: null };
 		}
 	}
 
+	async #updateAndReturnApartment(apartmentId, apartmentUpdate) {
+		const [affectedRowsCount] = await ApartmentModel.update(apartmentUpdate, {
+			where: {
+				id: apartmentId
+			},
+		});
+
+		if (affectedRowsCount === 0) {
+			return null;
+		}
+
+		return await ApartmentModel.findByPk(apartmentId);
+	}
+
 	async createApartment(apartmentDto) {
 		try {
 			const apartment = await ApartmentModel.create(apartmentDto);
-			
+
 			return { error: null, apartment: apartment.dataValues };
 		} catch (error) {
 			return { error, apartment: null };

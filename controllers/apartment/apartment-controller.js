@@ -20,6 +20,7 @@ export class ApartmentController {
 	static async getApartment(apartmentId) {
 		try {
 			const apartment = await ApartmentService.getApartmentById(apartmentId);
+
 			if (!apartment) {
 				return null;
 			}
@@ -75,7 +76,7 @@ export class ApartmentController {
 		}
 
 		const result = validationResult(request);
-
+		
 		if (result?.errors?.length > 0) {
 			const apartmentViewModel = toApartmentView({
 				id: apartmentId,

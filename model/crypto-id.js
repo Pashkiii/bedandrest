@@ -1,21 +1,19 @@
-const key = process.env.WIFI_SECURE_KEY || '';
-
 export class CryptoId {
 	/**
 	 * @param {number} value
 	 * @returns {string}
 	 */
 	static encode(value) {
+		const key = process.env.WIFI_SECURE_KEY || '';
+
 		const numStr = value.toString();
-		let encryptedNumStr = "";
-		let keyIndex = 0;
+		let encryptedNumStr = ''
 
 		for (let i = 0; i < numStr.length; i++) {
 			const digit = parseInt(numStr[i]);
-			const keyDigit = key.charCodeAt(keyIndex % key.length) % 10; // Используем код ASCII символа из ключа по модулю 10
+			const keyDigit = key.charCodeAt(i % key.length) % 10; // Используем код ASCII символа из ключа по модулю 10
 			const encryptedDigit = (digit + keyDigit) % 10;
 			encryptedNumStr += encryptedDigit;
-			keyIndex++;
 		}
 
 		return encryptedNumStr;
@@ -26,8 +24,10 @@ export class CryptoId {
 	 * @returns {number}
 	 */
 	static decode(code) {
+		const key = process.env.WIFI_SECURE_KEY || '';
+
 		const numStr = code.toString();
-		let decryptedNumStr = "";
+		let decryptedNumStr = '';
 		let keyIndex = 0;
 
 		for (let i = 0; i < numStr.length; i++) {

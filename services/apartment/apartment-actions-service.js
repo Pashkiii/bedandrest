@@ -5,7 +5,8 @@ import { log } from '../../model/logger/index.js';
 export class ApartmentActionsService {
 	static async updateApartment(apartment) {
 		const apartmentUpdateDto = apartmentUpdateDtoMapper(apartment);
-		const { error, apartmentsDto } = await apartmentDb.updateApartment(apartment.id, apartmentUpdateDto);
+		const { error, apartment: apartmentDto } = await apartmentDb.updateApartment(apartment.id, apartmentUpdateDto);
+
 		if (error) {
 			await log([
 				`ERROR`,
@@ -17,28 +18,16 @@ export class ApartmentActionsService {
 
 			return null;
 		}
-		if (!Array.isArray(apartmentsDto)) {
+		if (!apartmentDto) {
 			await log([
 				'ERROR',
 				'ApartmentActionsService',
 				'Update apartment error',
-				`apartments not array: ${apartmentsDto}`
+				`apartmentsDto is not object: ${apartmentsDto}`
 			]);
 
 			return null;
 		}
-		if (apartmentsDto.length === 0) {
-			await log([
-				'ERROR',
-				'ApartmentActionsService',
-				'Update apartment error',
-				`apartmentsDto is empty: ${apartmentsDto}`
-			]);
-
-			return null;
-		}
-
-		const apartmentDto = apartmentsDto[0];
 
 		return Apartment.fromApartmentDto(apartmentDto);
 	}
@@ -121,13 +110,20 @@ function apartmentUpdateDtoMapper(apartment) {
 			apartmentUpdateDto[apartmentUpdateMap[key]] = apartment[key];
 		});
 
+	if ('inHour' in apartmentUpdateDto && typeof apartmentUpdateDto.inHour === 'string') {
+		apartmentUpdateDto.inHour = parseInt(apartmentUpdateDto.inHour, 10);
+	}
+	if ('outHour' in apartmentUpdateDto && typeof apartmentUpdateDto.outHour === 'string') {
+		apartmentUpdateDto.outHour = parseInt(apartmentUpdateDto.outHour, 10);
+	}
+
 	return apartmentUpdateDto;
 }
 
 const apartmentUpdateMap = Object.freeze({
-	'ads': 'ads',
-	'address': 'address',
-	'linens': 'linens',
+	ads: 'ads',
+	address: 'address',
+	linens: 'linens',
 	inHour: 'inHour',
 	outHour: 'outHour',
 	deposit: 'deposit',

@@ -31,18 +31,7 @@ export class Apartment {
 }
 
 export function toApartmentView(apartmentModel, errors = []) {
-	const apartment = {
-		mapLink: {
-			value: `/apt/${CryptoId.encode(apartmentModel.id)}`,
-		},
-		wifiLink: {
-			value: `/wifi/${CryptoId.encode(apartmentModel.id)}`,
-		},
-	};
-
-	const getErrorByPath = (path, errors) => {
-		return errors.find((error) => error.path === path);
-	};
+	const apartment = {};
 
 	for (const key in apartmentModel) {
 		apartment[key] = {
@@ -51,5 +40,18 @@ export function toApartmentView(apartmentModel, errors = []) {
 		};
 	}
 
+	apartment.inHour.value = typeof apartmentModel.inHour === 'number' ? `${apartmentModel.inHour}:00` : apartmentModel.inHour;
+	apartment.outHour.value = typeof apartmentModel.outHour === 'number' ? `${apartmentModel.outHour}:00` : apartmentModel.outHour;
+	apartment.mapLink = {
+		value: `/apt/${CryptoId.encode(apartmentModel.id)}`
+	};
+	apartment.wifiLink = {
+		value: `/wifi/${CryptoId.encode(apartmentModel.id)}`
+	};
+
 	return apartment;
 }
+
+const getErrorByPath = (path, errors) => {
+	return errors.find((error) => error.path === path);
+};

@@ -1,4 +1,11 @@
 import dotenv from 'dotenv';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({
+    path: path.resolve(__dirname, '../.env')
+});
+
 import { fileURLToPath } from 'node:url';
 import * as path from 'node:path';
 import express from 'express';
@@ -13,13 +20,6 @@ import { bookingRouter } from './routes/booking-router.js';
 import { apiRouter } from './routes/api-router.js';
 import { aptRouter } from './routes/apt-router.js';
 import { wifiRouter } from './routes/wifi-router.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({
-    path: '../.env'
-});
 
 const app = express();
 const port = process.env.PORT || 3000;
