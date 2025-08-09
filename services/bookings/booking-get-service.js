@@ -8,7 +8,10 @@ export class BookingGetService {
 		const { error, bookings = [] } = await db.getActiveBookings(beginDate);
 
 		if (error) {
-			await log(`ERROR. BookingService. Get bookings error: ${JSON.stringify(error)}`);
+			await log(
+				['BookingService', `Get bookings error: ${JSON.stringify(error)}`],
+				{ type: 'ERROR' }
+			);
 
 			return [];
 		}

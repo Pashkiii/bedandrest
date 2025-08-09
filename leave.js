@@ -1,10 +1,16 @@
 import dotenv from 'dotenv';
-import { log } from './model/logger/index.js';
-import { leaveBooking } from './application/leave-booking.js';
+import { fileURLToPath } from 'node:url';
+import * as path from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config({
-    path: '../.env'
+    path: path.resolve(__dirname, '../.env')
 });
+
+import { log } from './model/logger/index.js';
+import { leaveBooking } from './application/leave-booking.js';
 
 export async function GET() {
     try {

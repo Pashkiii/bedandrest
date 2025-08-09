@@ -17,6 +17,13 @@ export class ApiBookingController {
 			}
 
 			const action = realtyCalendarAdapter.extractAction();
+			const booking = realtyCalendarAdapter.extractBooking();
+			if (action !== realtyCalendarAction.delete && booking.apartmentId !== 219768)
+			{
+				return;
+			}
+
+			
 			switch (action) {
 				case (realtyCalendarAction.create):
 					await createBooking(realtyCalendarAdapter.extractBooking());
@@ -29,13 +36,17 @@ export class ApiBookingController {
 					await deleteBooking(bookingId);
 					break;
 				default:
-					await log(`ERROR. ApiBookingController_booking. Action not found: ${action}`);
+					await log(`ApiBookingController_booking. Action not found: ${action}`, { type: 'ERROR' });
 			}
 		} catch (error) {
 			if (error instanceof ParseDataError) {
-				await log(`ERROR. ApiBookingController_booking. ParseDataError ${error.message}. Data: ${JSON.stringify(realtyCalendarData)}`);
+				await log(`ApiBookingController_booking. ParseDataError ${error.message}. Data: ${JSON.stringify(realtyCalendarData)}`, {
+					type: 'ERROR'
+				});
 			} else {
-				await log(`ERROR. ApiBookingController_booking. UnhandledError message: ${error.message}. ${JSON.stringify(error)}`);
+				await log(`ApiBookingController_booking. UnhandledError message: ${error.message}. ${JSON.stringify(error)}`, {
+					type: 'ERROR'
+				});
 			}
 		}
 	}

@@ -1,4 +1,7 @@
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'node:url';
+import * as path from 'node:path';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -6,8 +9,6 @@ dotenv.config({
     path: path.resolve(__dirname, '../.env')
 });
 
-import { fileURLToPath } from 'node:url';
-import * as path from 'node:path';
 import express from 'express';
 import hbs from 'hbs';
 import expressHbs from 'express-handlebars';

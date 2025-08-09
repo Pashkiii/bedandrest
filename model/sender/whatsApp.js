@@ -30,12 +30,15 @@ export class WhatsAppSender {
                 }
             }
 
-            await log(`ERROR. WhatsApp send message error. Response ${JSON.stringify(await response.json())}`);
+            await log([
+                'WhatsApp send message error',
+                `Response ${JSON.stringify(await response.json())}`
+            ], { type: 'ERROR' });
 
             throw new SenderError('Message don\'t sent to WhatsApp', response.status);
         } catch (err) {
             console.error(err);
-            log('WhatsApp send message error');
+            void log('WhatsApp send message error');
 
             throw new SenderError('WhatsAppSender error', err);
         }

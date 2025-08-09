@@ -5,10 +5,12 @@ import { BookingModel } from '../model/booking.js';
 export class BookingDb {
 	async getActiveBookings(beginDate) {
 		try {
-			const beginDateUtc = convertDateToUtcTimezone(beginDate);
+			const beginDateUtc = convertDateToUtcTimezone(beginDate, { onlyDay: true });
 			const bookings = await BookingModel.findAll({
 				where: {
-					beginDate: beginDateUtc
+					beginDate: {
+						[Op.gte]: beginDateUtc
+					}
 				},
 				order: [
 					['beginDate', 'ASC']
@@ -17,8 +19,6 @@ export class BookingDb {
 
 			return { error: null, bookings };
 		} catch (error) {
-			console.log({ getActiveBookingsError: error });
-
 			return { error, bookings: [] };
 		}
 	}
