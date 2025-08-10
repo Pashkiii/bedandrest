@@ -29,13 +29,12 @@ export async function sendSecondMessage(bookingModel, apartment) {
 
 	if (!sendContractResult.done || !sendContractResult.status) {
 		await log([
-				'WARN',
 				'SendSecondMessage',
 				'Contract link not created',
 				`ContractResult: ${JSON.stringify(sendContractResult)}`,
 				`BookingModel: ${JSON.stringify(bookingModel)}`,
 				`Apartment: ${JSON.stringify(apartment)}`,
-			].join('. ')
+			], { type: 'WARN' }
 		);
 
 		const managerTel = process.env.MANAGER_PHONE;

@@ -12,7 +12,7 @@ dotenv.config({
 import { log } from './model/logger/index.js';
 import { leaveBooking } from './application/leave-booking.js';
 
-export async function GET() {
+async function main() {
     try {
         await leaveBooking();
     } catch (error) {
@@ -22,6 +22,6 @@ export async function GET() {
     return new Response(`Hello from ${process.env.VERCEL_REGION}`);
 }
 
-if (process.env.NODE_ENV === 'development') {
-    await GET();
-}
+main()
+    .then(() => {})
+    .catch((reject) => console.error('Leave start rejected:', reject));

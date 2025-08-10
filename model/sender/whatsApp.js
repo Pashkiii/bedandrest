@@ -23,10 +23,9 @@ export class WhatsAppSender {
 
             if (response.ok) {
                 const responseData = await response.json();
+
                 if (responseData.status === 'done') {
-                    return {
-                        ok: true
-                    };
+                    return { ok: true };
                 }
             }
 

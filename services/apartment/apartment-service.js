@@ -30,6 +30,7 @@ export class ApartmentService {
 
     static async getAllApartmentsList() {
         const [error, apartmentsDto] = await apartmentDb.getAll();
+        
         if (error) {
             await log(`ERROR. ApartmentService. Get all apartment list error: ${JSON.stringify(error)}`);
 

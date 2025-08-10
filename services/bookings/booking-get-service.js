@@ -41,7 +41,10 @@ export class BookingGetService {
 		const { error, bookings = [] } = await db.getBookingsByBeginDate(date);
 
 		if (error) {
-			await log(`ERROR. BookingService. Get bookings starting today: ${JSON.stringify(error)}`);
+			await log(
+				['BookingService', `Get bookings starting today: ${JSON.stringify(error)}`],
+				{ type: 'ERROR' }
+			);
 		}
 
 		return bookings.map((b) => convertBookingDto(b));

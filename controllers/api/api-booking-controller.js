@@ -17,6 +17,11 @@ export class ApiBookingController {
 			}
 
 			const action = realtyCalendarAdapter.extractAction();
+			if (![realtyCalendarAction.create, realtyCalendarAction.update, realtyCalendarAction.delete].includes(action))
+			{
+				return;
+			}
+
 			const booking = realtyCalendarAdapter.extractBooking();
 			if (action !== realtyCalendarAction.delete && booking.apartmentId !== 219768)
 			{

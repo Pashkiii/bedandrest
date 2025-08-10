@@ -5,17 +5,19 @@ class ApartmentDb {
 		try {
 			const apartments = await ApartmentModel.findAll({ raw: true });
 
-			return { error: null, apartments };
+			return [null, apartments];
 		} catch (error) {
-			return { error, apartments: [] };
+			return [error, []];
 		}
 	}
 
 	async getApartmentList() {
 		try {
 			const apartments = await ApartmentModel.findAll({
-				where: { 'archive': false },
-				raw: true
+				where: {
+					archive: false,
+					raw: true,
+				}
 			});
 
 			return [null, apartments];

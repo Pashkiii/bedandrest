@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { convertDateToUtcTimezone } from '../lib.js';
 import { BookingModel } from '../model/booking.js';
 
@@ -35,14 +35,15 @@ export class BookingDb {
 
 	async getBookingsByBeginDate(beginDate) {
 		try {
-			const beginDateUtc = convertDateToUtcTimezone(beginDate);
+			const beginDateUtc = convertDateToUtcTimezone(beginDate, { onlyDay: true });
 			const bookings = await BookingModel.findAll({
-				where: {
-					beginDate: beginDateUtc,
-				}
+				where: Sequelize.literal(`DATE(beginDate) = '${beginDateUtc}'`)
 			});
 
-			return { error: null, bookings };
+			return {
+				error: null,
+				bookings: bookings.map((b) => b.dataValues)
+			};
 		} catch (error) {
 			return { error, bookings: [] };
 		}
@@ -53,12 +54,15 @@ export class BookingDb {
 	 */
 	async getBookingsByEndDate(endDate) {
 		try {
-			const endDateUtc = convertDateToUtcTimezone(endDate);
+			const endDateUtc = convertDateToUtcTimezone(endDate, { onlyDay: true });
 			const bookings = await BookingModel.findAll({
-				endDate: endDateUtc
+				where: Sequelize.literal(`DATE(endDate) = '${endDateUtc}'`)
 			});
 
-			return { error: null, bookings };
+			return {
+				error: null,
+				bookings: bookings.map((b) => b.dataValues)
+			};
 		} catch (error) {
 			return { error, bookings: [] }
 		}
@@ -119,10 +123,7 @@ export class BookingDb {
 
 	async updateBookings(bookingsDto) {
 		try {
-			const model = await BookingModel.upsert(
-				bookingsDto
-			);
-			console.log({ model });
+			await BookingModel.upsert(bookingsDto);
 
 			return { error: null };
 		} catch (error) {
@@ -137,7 +138,6 @@ export class BookingDb {
 					id: bookingId
 				}
 			});
-			console.log({ deleteModel: model });
 
 			return { error: null }
 		} catch (error) {

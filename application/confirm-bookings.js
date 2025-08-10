@@ -8,12 +8,6 @@ import { sendSecondMessage } from './lib.js';
 export async function confirmBookings() {
 	const today = syncDateToMoscow(new Date());
 
-	await log([
-		'INFO',
-		'ConfirmBooking',
-		`Start function time: ${today.toString()}`,
-	]);
-
 	try {
 		const [bookings, apartments] = await Promise.all([
 			BookingGetService.getBookingsStartingToday(today),
@@ -22,28 +16,25 @@ export async function confirmBookings() {
 
 		if (!Array.isArray(bookings)) {
 			await log([
-				'ERROR',
 				'ConfirmBooking',
 				'"bookings" not iterable',
 				`bookings: ${bookings} (${typeof bookings})`,
-			].join('. '));
-		}
+			], { type: 'ERROR' });
 
-		await log([
-			'INFO',
-			'ConfirmBooking',
-			'Selected bookings',
-			`Time: ${today.toLocaleString()}`,
-			`Bookings: ${JSON.stringify(bookings)}`,
-		]);
+			return;
+		}
 
 		if (bookings.length === 0) {
 			return;
 		}
 
 		const bookingsModelPatch = [];
-
+		
 		for (const booking of bookings) {
+			if (booking.apartmentId !== 219768) {
+				continue;
+			}
+
 			const apartment = apartments.find((a) => a.id === booking.apartmentId) || null;
 			const { done } = await sendSecondMessage(booking, apartment);
 
@@ -57,6 +48,9 @@ export async function confirmBookings() {
 
 		await BookingActionService.updateBookingsSecondStatus(bookingsModelPatch);
 	} catch (error) {
-		await log(`ERROR. Confirm bookings [${today.toLocaleDateString()}] error ${error.name}: ${error.message}`);
+		await log(
+			`Confirm bookings [${today.toLocaleDateString()}] error ${error.name}: ${error.message}`,
+			{ type: 'ERROR' }
+		);
 	}
 }
