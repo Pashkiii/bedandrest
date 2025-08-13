@@ -15,13 +15,14 @@ class ApartmentDb {
 		try {
 			const apartments = await ApartmentModel.findAll({
 				where: {
-					archive: false,
-					raw: true,
-				}
+					archive: false
+				},
+				raw: true
 			});
 
 			return [null, apartments];
 		} catch (error) {
+			console.log({ error });
 			return [error, []];
 		}
 	}
@@ -29,7 +30,9 @@ class ApartmentDb {
 	async getArchiveApartmentsList() {
 		try {
 			const apartments = await ApartmentModel.findAll({
-				where: { 'archive': true },
+				where: {
+					archive: true
+				},
 				raw: true
 			});
 
