@@ -5,14 +5,6 @@ import { log } from '../../model/logger/index.js';
 export class BookingActionService {
 	static async insertBooking(bookingModel) {
 		const bookingDto = createBookingDto(bookingModel);
-
-		await log(
-			`INFO. BookingActionService.InsertBooking. BookingModel: ${JSON.stringify(bookingModel)}. BookingDto: ${JSON.stringify(bookingDto)}`,
-			{
-				type: 'INFO',
-			}
-		);
-
 		const bookingStorage = new BookingDb();
 		const { error } = await bookingStorage.addBooking(bookingDto);
 

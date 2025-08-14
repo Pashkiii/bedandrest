@@ -23,15 +23,6 @@ export async function createBooking(bookingModel) {
 		}
 
 		if (compareDates(bookingModel.beginDate, bookingModel.createDate)) {
-			await log([
-				'INFO',
-				'CreateBooking',
-				'ComparingDate',
-				`BeginDate: ${bookingModel.beginDate.toISOString()}`,
-				`CreateDate: ${bookingModel.createDate.toISOString()}`,
-				`Booking: ${JSON.stringify(bookingModel)}`
-			].join('. '))
-
 			const secondMsgSendingResult = await sendSecondMessage(bookingModel, apartment);
 			if (secondMsgSendingResult.done) {
 				bookingModel.secondMessageSent = true;

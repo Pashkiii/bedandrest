@@ -11,7 +11,7 @@ export async function sendFirstMessage(bookingModel, apartment) {
 	}
 
 	const firstMessageWriter = new CreateBookMessageCreator(apartment);
-	const firstMessage = firstMessageWriter.write();
+	const firstMessage = firstMessageWriter.write(bookingModel);
 	const messengerService = new MessengerService();
 	const { error, done } = await messengerService.send(bookingModel.phone, firstMessage);
 

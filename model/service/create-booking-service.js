@@ -14,7 +14,7 @@ export class CreateBookingService {
         const today = new Date();
 
         try {
-            const message = (new CreateBookMessageCreator(book)).write();
+            const message = (new CreateBookMessageCreator(book)).write(book);
             const sendResult = await sendMessage(book.phone, message);
             if (!sendResult.ok) {
                 return;
