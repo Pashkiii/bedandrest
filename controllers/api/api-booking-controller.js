@@ -22,13 +22,6 @@ export class ApiBookingController {
 				return;
 			}
 
-			const booking = realtyCalendarAdapter.extractBooking();
-			if (action !== realtyCalendarAction.delete && booking.apartmentId !== 219768)
-			{
-				return;
-			}
-
-			
 			switch (action) {
 				case (realtyCalendarAction.create):
 					await createBooking(realtyCalendarAdapter.extractBooking());

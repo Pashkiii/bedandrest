@@ -24,6 +24,10 @@ export async function leaveBooking() {
 		const successSentBookingIds = [];
 
 		for(const booking of bookings) {
+			if (booking.apartmentId !== 219768) {
+				continue;
+			}
+
 			const { done } = await sendThirdMessage(booking);
 
 			if (done) {
