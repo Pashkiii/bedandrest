@@ -21,7 +21,7 @@ export async function updateBooking(bookingModel) {
 
 		const apartment =  await ApartmentService.getApartmentById(bookingModel.apartmentId);
 		const today = syncDateToMoscow(new Date());
-		if (!booking.phone && bookingModel.phone && booking.apartmentId === 219768) {
+		if (!booking.phone && bookingModel.phone) {
 			if (!booking.firstMessageSent && dateLater(today, booking.beginDate)) {
 				const firstMsgSendingResult = await sendFirstMessage(bookingModel, apartment);
 				if (firstMsgSendingResult.done) {

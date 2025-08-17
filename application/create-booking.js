@@ -17,17 +17,15 @@ export async function createBooking(bookingModel) {
 		const apartment = await ApartmentService.getApartmentById(bookingModel.apartmentId);
 		bookingModel.createDate = syncDateToMoscow(new Date());
 
-		if (bookingModel.apartmentId === 219768) {
-			const firstMsgSendingResult = await sendFirstMessage(bookingModel, apartment);
-			if (firstMsgSendingResult.done) {
-				bookingModel.firstMessageSent = true;
-			}
+		const firstMsgSendingResult = await sendFirstMessage(bookingModel, apartment);
+		if (firstMsgSendingResult.done) {
+			bookingModel.firstMessageSent = true;
+		}
 
-			if (compareDates(bookingModel.beginDate, bookingModel.createDate)) {
-				const secondMsgSendingResult = await sendSecondMessage(bookingModel, apartment);
-				if (secondMsgSendingResult.done) {
-					bookingModel.secondMessageSent = true;
-				}
+		if (compareDates(bookingModel.beginDate, bookingModel.createDate)) {
+			const secondMsgSendingResult = await sendSecondMessage(bookingModel, apartment);
+			if (secondMsgSendingResult.done) {
+				bookingModel.secondMessageSent = true;
 			}
 		}
 

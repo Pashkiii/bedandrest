@@ -31,10 +31,6 @@ export async function confirmBookings() {
 		const bookingsModelPatch = [];
 		
 		for (const booking of bookings) {
-			if (booking.apartmentId !== 219768) {
-				continue;
-			}
-
 			const apartment = apartments.find((a) => a.id === booking.apartmentId) || null;
 			const { done } = await sendSecondMessage(booking, apartment);
 
