@@ -74,7 +74,7 @@ export class BookingDb {
 	 */
 	async getActiveBookingByApartmentId(apartmentId, date) {
 		try {
-			const dateUtc = convertDateToUtcTimezone(date);
+			const dateUtc = convertDateToUtcTimezone(date, { onlyDay: true });
 			const bookingIds = await BookingModel.findAll({
 				attributes: ['id'],
 				where: {
@@ -86,11 +86,12 @@ export class BookingDb {
 						[Op.gte]: dateUtc
 					}
 				}
-			});
+			}) || [];
+			const ids = bookingIds.map((booking) => booking.dataValues.id);
 
-			return { error: null, bookingIds }
+			return { error: null, bookingIds: ids };
 		} catch (error) {
-			return { error, bookingIds: [] }
+			return { error, bookingIds: [] };
 		}
 	}
 
