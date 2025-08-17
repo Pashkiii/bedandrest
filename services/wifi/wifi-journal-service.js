@@ -1,7 +1,6 @@
 import { convertDateTimeToUtcTimezone } from '../../model/lib.js';
 import { WifiJournalDb } from '../../model/storage/wifi-journal-db.js';
 import { log } from '../../model/logger/index.js';
-import { WifiJournalModel } from '../../model/model/wifi-journal.js';
 
 /**
  * @param {WifiJournalEntry} wifiJournalEntry

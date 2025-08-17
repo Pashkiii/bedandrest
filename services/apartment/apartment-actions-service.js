@@ -23,7 +23,7 @@ export class ApartmentActionsService {
 				'ERROR',
 				'ApartmentActionsService',
 				'Update apartment error',
-				`apartmentsDto is not object: ${apartmentsDto}`
+				`apartmentsDto is not object: ${apartmentDto}`
 			]);
 
 			return null;

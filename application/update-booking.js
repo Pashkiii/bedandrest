@@ -3,10 +3,7 @@ import { log } from '../model/logger/index.js';
 import { createBooking } from './create-booking.js';
 import { syncDateToMoscow } from '../model/lib.js';
 import { ApartmentService } from '../services/apartment/apartment-service.js';
-import {
-	sendFirstMessage,
-	sendSecondMessage
-} from './lib.js';
+import { sendFirstMessage } from './lib.js';
 import { BookingActionService } from '../services/bookings/booking-action-service.js';
 
 export async function updateBooking(bookingModel) {
@@ -29,13 +26,6 @@ export async function updateBooking(bookingModel) {
 				}
 			}
 		}
-
-		// if (!booking.secondMessageSent) {
-		// 	const secondMsgSendingResult = await sendSecondMessage(bookingModel, apartment);
-		// 	if (secondMsgSendingResult.done) {
-		// 		bookingModel.secondMessageSent = true;
-		// 	}
-		// }
 
 		await BookingActionService.updateBooking(bookingModel);
 	} catch (error) {

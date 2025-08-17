@@ -29,7 +29,7 @@ export class Sanitizer {
 	}
 }
 
-var foo = function(value) {
+const foo = function(value) {
 	const map2 = {
 		'&amp;': '&',
 		'&lt;': '<',

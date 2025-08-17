@@ -1,5 +1,4 @@
 import { WhatsAppSender } from './whatsApp.js';
-import { SenderError } from './exception.js';
 
 export async function sendMessage(phone, message) {
     if (process.env.NODE_ENV === 'development') {
@@ -8,7 +7,6 @@ export async function sendMessage(phone, message) {
     }
 
     const sender = new WhatsAppSender();
-    const result = await sender.send(phone, message);
 
-    return result;
+    return await sender.send(phone, message);
 }
