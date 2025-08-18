@@ -9,7 +9,12 @@ export class BookingActionService {
 		const { error } = await bookingStorage.addBooking(bookingDto);
 
 		if (error) {
-			await log(`ERROR. BookingService. Insert booking error: ${error.name}: ${error.message}`);
+			await log([
+				`BookingService`,
+				`Insert booking error: ${error.name}: ${error.message}`
+			], {
+				type: 'ERROR'
+			});
 		}
 	}
 
@@ -42,15 +47,15 @@ export class BookingActionService {
 	}
 
 	static async deleteBooking(bookingId) {
-			const bookingStorage = new BookingDb();
-			const { error } = await bookingStorage.deleteBooking(bookingId);
+		const bookingStorage = new BookingDb();
+		const { error } = await bookingStorage.deleteBooking(bookingId);
 
-			if (error) {
-				await log(
-					['ERROR', 'BookingService', `Delete booking error: ${error.name}: ${error.message}`],
-					{ separator: '. ' },
-					'ERROR'
-				);
-			}
+		if (error) {
+			await log(
+				['ERROR', 'BookingService', `Delete booking error: ${error.name}: ${error.message}`],
+				{ separator: '. ' },
+				'ERROR'
+			);
+		}
 	}
 }

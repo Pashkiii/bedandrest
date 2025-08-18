@@ -110,7 +110,7 @@ export class RealtyCalendarAdapter {
 
 	#extractPhone() {
 		const phoneValue = String(this.booking?.client?.phone || '');
-		const matches = phoneValue.match(/\d+/g);
+		const matches = phoneValue.match(/\d+/g) || [];
 
 		if (!matches.length || !matches[0]) {
 			return null;

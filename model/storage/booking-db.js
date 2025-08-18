@@ -97,7 +97,7 @@ export class BookingDb {
 
 	async addBooking(bookingDto) {
 		try {
-			const model = await BookingModel.create(bookingDto)
+			const model = await BookingModel.create(bookingDto);
 
 			return { error: null, booking: model.dataValues };
 		} catch (error) {
