@@ -11,7 +11,6 @@ apiApartmentRouter.post(
 	jsonParser,
 	body('id').notEmpty().isInt(),
 	body('address').notEmpty(),
-	body('ads'),
 	body('inHour').notEmpty().isInt(),
 	body('outHour').notEmpty().isInt(),
 	body('deposit').notEmpty().isNumeric(),

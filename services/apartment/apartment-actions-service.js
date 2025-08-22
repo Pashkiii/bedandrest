@@ -121,7 +121,6 @@ function apartmentUpdateDtoMapper(apartment) {
 }
 
 const apartmentUpdateMap = Object.freeze({
-	ads: 'ads',
 	address: 'address',
 	linens: 'linens',
 	inHour: 'inHour',

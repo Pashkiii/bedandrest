@@ -12,6 +12,7 @@ const ApartmentModel = sequelize.define('apartment', {
         type: DataTypes.STRING,
         defaultValue: '',
     },
+    /** @deprecated */
     ads: {
         type: DataTypes.STRING,
         allowNull: true,

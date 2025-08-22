@@ -44,7 +44,8 @@ class ApartmentDb {
 
 	async getById(apartmentId) {
 		try {
-			const apartment = await ApartmentModel.findByPk(apartmentId);
+			const apartmentDto = await ApartmentModel.findByPk(apartmentId);
+			const apartment = apartmentDto.dataValues;
 
 			return [null, apartment || null];
 		} catch (error) {

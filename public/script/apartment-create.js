@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		return {
 			id: parseInt(elements.id.value, 10),
 			address: elements.address.value,
-			ads: elements.ads.value,
 			inHour: parseInt(elements.inHour.value, 10),
 			outHour: parseInt(elements.outHour.value, 10),
 			deposit: parseInt(elements.deposit.value, 10),

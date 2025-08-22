@@ -38,7 +38,6 @@ apartmentRouter.post(
 	'/:id',
 	urlencodedParser,
 	body('address').notEmpty(),
-	body('ads'),
 	body('inHour').notEmpty().isTime({ mode: 'default', hourFormat: 'hour24' }),
 	body('outHour').notEmpty().isTime({ mode: 'default', hourFormat: 'hour24' }),
 	body('deposit').isNumeric(),

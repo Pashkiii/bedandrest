@@ -4,7 +4,6 @@ export class Apartment {
 	constructor(apartment) {
 		this.id = apartment.id;
 		this.address = apartment.address;
-		this.ads = apartment.ads;
 		this.linens = apartment.linens;
 		this.inHour = apartment.inHour;
 		this.outHour = apartment.outHour;
@@ -12,13 +11,13 @@ export class Apartment {
 		this.thingsLink = apartment.thingsLink;
 		this.mapPoint = apartment.mapPoint;
 		this.archive = apartment.archive;
+		this.mapLink = `/apt/${CryptoId.encode(apartment.id)}`;
 	}
 
 	static fromApartmentDto(apartmentDto) {
 		return new Apartment({
 			id: apartmentDto['id'],
 			address: apartmentDto['address'],
-			ads: apartmentDto['ads'],
 			linens: apartmentDto['linens'],
 			inHour: apartmentDto['inHour'],
 			outHour: apartmentDto['outHour'],
