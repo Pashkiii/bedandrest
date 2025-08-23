@@ -24,7 +24,12 @@ export class OkiDoki {
 			const result = await response.json();
 
 			if (!response.ok) {
-				await log(`ERROR. OkiDoki send contract error. Response status: ${response.status}, error: ${response.error}.`);
+				await log([
+					'OkiDoki send contract error',
+					`Response status: ${response.status}`,
+					`error: ${response.error}.`,
+					`contract: ${JSON.stringify(contract)}`
+				], { type: 'ERROR' });
 
 				return {
 					done: false,
