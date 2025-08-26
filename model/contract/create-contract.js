@@ -19,13 +19,18 @@ export function createContract(booking, apartment) {
 			getAmount(booking),
 			getPricePerDay(booking),
 			getLinenCount(apartment),
-			getLinkOnThings(apartment),
+			getLinkOnThings(apartment)
 		]
 	};
 }
 
 function parseBookingData(bookingModel) {
-	const data = JSON.parse(bookingModel.data);
+	if (typeof bookingModel.data.data === 'object') {
+		return bookingModel.data.data;
+	}
+
+	const data = JSON.parse(bookingModel.data.data);
+
 	return data?.data;
 }
 

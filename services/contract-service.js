@@ -5,6 +5,7 @@ export class ContractService {
 	async sendContract(bookingModel, apartment) {
 		const okiDoki = new OkiDoki(bookingModel, apartment);
 		const contract = okiDoki.createContract();
+		
 		if (!contract) {
 			await log(`ERROR. ContractService. Contract for booking ${bookingModel.id} not created.`);
 

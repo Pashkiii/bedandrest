@@ -124,7 +124,20 @@ export class BookingDb {
 
 	async updateBookings(bookingsDto) {
 		try {
-			await BookingModel.upsert(bookingsDto);
+			for (const bookingDto of bookingsDto) {
+				const id = bookingDto.id;
+				if (!id) {
+					continue;
+				}
+
+				delete bookingDto.id;
+
+				await BookingModel.update(bookingDto, {
+					where: {
+						id
+					}
+				});
+			}
 
 			return { error: null };
 		} catch (error) {
