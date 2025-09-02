@@ -25,13 +25,20 @@ export function createContract(booking, apartment) {
 }
 
 function parseBookingData(bookingModel) {
-	if (typeof bookingModel.data.data === 'object') {
+	if (typeof bookingModel.data === 'object' && typeof bookingModel.data.data === 'object') {
 		return bookingModel.data.data;
 	}
+	if (typeof bookingModel.data === 'string') {
+		const data = JSON.parse(bookingModel.data);
 
-	const data = JSON.parse(bookingModel.data.data);
+		if ('data' in data) {
+			return data.data;
+		}
 
-	return data?.data;
+		return data;
+	}
+
+	return bookingModel;
 }
 
 const createEntity = (keyword, value) => {

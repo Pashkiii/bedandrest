@@ -65,13 +65,11 @@ export function createBookingPageViewModel(bookingModel, apartmentModel = null) 
 }
 
 export function extractBookingData(data) {
-    const bookingData = JSON.parse(data);
-
-    if (typeof bookingData === 'string') {
-        return extractBookingData(bookingData);
+    if (typeof data === 'string') {
+        return extractBookingData(JSON.parse(data));
+    } else {
+        return data;
     }
-
-    return bookingData;
 }
 
 export function convertBookingDto(bookingDto) {

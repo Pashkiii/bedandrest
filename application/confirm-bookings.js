@@ -29,7 +29,7 @@ export async function confirmBookings() {
 		}
 
 		const bookingsModelPatch = [];
-		
+
 		for (const booking of bookings) {
 			const apartment = apartments.find((a) => a.id === booking.apartmentId) || null;
 			const { done } = await sendSecondMessage(booking, apartment);
