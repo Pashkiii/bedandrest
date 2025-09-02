@@ -43,7 +43,11 @@ ${this.#makeExtraServicesBlock()}
     }
 
     #getAddress() {
-        return this.apartment ? ` (${this.apartment.address})` : '';
+        if (!this.apartment || !this.apartment.address) {
+            return '';
+        }
+
+        return this.apartment.address.replace(/кв\. \d+/g, '').trimEnd() || '';
     }
 
     #makeExtraServicesBlock() {
