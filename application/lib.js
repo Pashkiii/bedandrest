@@ -7,6 +7,11 @@ import { log } from '../model/logger/index.js';
 
 export async function sendFirstMessage(bookingModel, apartment) {
 	if (!bookingModel.phone) {
+		await log([
+			'SendFirstMessage',
+			`Phone not set for booking ${bookingModel.id}`
+		], { type: 'INFO' });
+
 		return { done: false };
 	}
 
@@ -14,6 +19,14 @@ export async function sendFirstMessage(bookingModel, apartment) {
 	const firstMessage = firstMessageWriter.write(bookingModel);
 	const messengerService = new MessengerService();
 	const { error, done } = await messengerService.send(bookingModel.phone, firstMessage);
+
+	if (error) {
+		await log([
+			'SendFirstMessage',
+			`Message not sended for booking ${bookingModel.id}`,
+			`Error: ${typeof error === 'string' ? error : JSON.stringify(error)}`
+		], { type: 'ERROR' });
+	}
 
 	return { done };
 }

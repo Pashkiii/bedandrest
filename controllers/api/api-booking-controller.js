@@ -22,6 +22,8 @@ export class ApiBookingController {
 				return;
 			}
 
+			realtyCalendarAdapter.parseBooking();
+
 			switch (action) {
 				case (realtyCalendarAction.create):
 					await createBooking(realtyCalendarAdapter.extractBooking());

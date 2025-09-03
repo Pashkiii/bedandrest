@@ -5,12 +5,11 @@ import { realtyCalendarAction } from '../model/const.js';
 export class RealtyCalendarAdapter {
 	action;
 	statusCd;
+	booking = null;
 
 	constructor(realtyCalendarBookingData) {
 		this.realtyCalendarBookingData = realtyCalendarBookingData;
 		this.#checkData();
-
-		this.booking = this.#parseBooking();
 	}
 
 	#checkData() {
@@ -19,9 +18,15 @@ export class RealtyCalendarAdapter {
 		}
 	}
 
-	#parseBooking() {
+	parseBooking() {
+		if (!this.booking !== null) {
+			return this.booking;
+		}
+
 		if (isObject(this.realtyCalendarBookingData?.data?.booking)) {
-			return this.realtyCalendarBookingData?.data?.booking;
+			this.booking = this.realtyCalendarBookingData.data.booking;
+
+			return this.booking;
 		}
 
 		throw new ParseDataError('Invalid format data. Booking not found');
