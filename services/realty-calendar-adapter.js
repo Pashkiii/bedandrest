@@ -63,7 +63,7 @@ export class RealtyCalendarAdapter {
 			return this.statusCd;
 		}
 
-		const statusCd = parseInt(this.booking['status_cd'], 10);
+		const statusCd = parseInt((this.realtyCalendarBookingData?.data?.booking?.['status_cd'] ?? ''), 10);
 
 		if (isNaN(statusCd)) {
 			throw new ParseDataError(`Parse "statusCd" error. Invalid value: ${statusCd}.`);
