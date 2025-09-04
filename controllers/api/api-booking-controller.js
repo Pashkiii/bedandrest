@@ -10,9 +10,8 @@ export class ApiBookingController {
 	async booking(realtyCalendarData) {
 		try {
 			const realtyCalendarAdapter = new RealtyCalendarAdapter(realtyCalendarData);
-			const statusCd = realtyCalendarAdapter.extractStatusCd();
 
-			if (statusCd !== 5) {
+			if (realtyCalendarAdapter.extractStatusCd() !== 5) {
 				return;
 			}
 

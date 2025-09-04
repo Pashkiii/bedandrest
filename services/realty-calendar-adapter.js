@@ -5,7 +5,7 @@ import { realtyCalendarAction } from '../model/const.js';
 export class RealtyCalendarAdapter {
 	action;
 	statusCd;
-	booking = null;
+	#booking = null;
 
 	constructor(realtyCalendarBookingData) {
 		this.realtyCalendarBookingData = realtyCalendarBookingData;
@@ -18,15 +18,29 @@ export class RealtyCalendarAdapter {
 		}
 	}
 
-	parseBooking() {
-		if (!this.booking !== null) {
-			return this.booking;
+	get booking() {
+		if (this.#booking !== null) {
+			return this.#booking;
 		}
 
 		if (isObject(this.realtyCalendarBookingData?.data?.booking)) {
-			this.booking = this.realtyCalendarBookingData.data.booking;
+			this.#booking = this.realtyCalendarBookingData.data.booking;
 
-			return this.booking;
+			return this.#booking;
+		}
+
+		throw new ParseDataError('Invalid format data. Booking not found from data', this.realtyCalendarBookingData);
+	}
+
+	parseBooking() {
+		if (!this.#booking !== null) {
+			return this.#booking;
+		}
+
+		if (isObject(this.realtyCalendarBookingData?.data?.booking)) {
+			this.#booking = this.realtyCalendarBookingData.data.booking;
+
+			return this.#booking;
 		}
 
 		throw new ParseDataError('Invalid format data. Booking not found');
@@ -63,7 +77,7 @@ export class RealtyCalendarAdapter {
 			return this.statusCd;
 		}
 
-		const statusCd = parseInt((this.realtyCalendarBookingData?.data?.booking?.['status_cd'] ?? ''), 10);
+		const statusCd = parseInt((this.realtyCalendarBookingData?.data?.booking?.['status_cd'] ?? '-1'), 10);
 
 		if (isNaN(statusCd)) {
 			throw new ParseDataError(`Parse "statusCd" error. Invalid value: ${statusCd}.`);
