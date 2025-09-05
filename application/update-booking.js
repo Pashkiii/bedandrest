@@ -10,7 +10,10 @@ export async function updateBooking(bookingModel) {
 	try {
 		const booking = await BookingGetService.getBookingById(bookingModel.id);
 		if (!booking) {
-			await log(`WARN. Update booking. Booking not found ${JSON.stringify(booking)}`);
+			await log([
+				`Update booking`,
+				`Booking (${bookingModel.id}) not found ${JSON.stringify(booking)}`
+			], { type: 'WARN' });
 			await createBooking(bookingModel);
 
 			return;
