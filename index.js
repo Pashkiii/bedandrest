@@ -43,10 +43,6 @@ app.use('/wifi', wifiRouter);
 app.use('/api', apiRouter);
 app.use('/api/apartment', apiApartmentRouter);
 
-app.get('/', function (req, response) {
-    response.redirect('/bookings');
-});
-
 sequelize.sync().then(() => {
     app.listen(port, async () => {
         console.log('Start app in port:', port);
