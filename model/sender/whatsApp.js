@@ -3,31 +3,54 @@ import { log } from '../logger/index.js';
 import { SenderError } from './exception.js';
 
 export class WhatsAppSender {
-    constructor() {
-        this.profileId = process.env.WAPPI_PROFILE_ID;
-        this.token = process.env.WAPPI_TOKEN;
+  constructor() {
+    this.profileId = process.env.WAPPI_PROFILE_ID;
+    this.token = process.env.WAPPI_TOKEN;
+    this.maxProfileId = process.env.WAPPI_MAX_PROFILE_ID;
+    this.maxToken = process.env.WAPPI_MAX_TOKEN;
+  }
+
+  async send(phone, message) {
+    let WaError = null;
+    let MaxError = null;
+    let result = null;
+
+    try {
+      await this.sendWA(phone, message);
+    } catch (e) {
+      WaError = e;
+    }
+    try {
+      await this.sendMax(phone, message);
+    } catch (e) {
+      MaxError = e;
     }
 
-    async send(phone, message) {
-        try {
-            const body = JSON.stringify({
-                recipient: phone,
+    if (WaError && MaxError) throw WaError;
+
+    return result;
+  }
+
+  async sendWA(phone, message) {
+    try {
+      const body = JSON.stringify({
+        recipient: phone,
                 body: message
-            });
+      });
 
             const response = await fetch(`https://wappi.pro/api/sync/message/send?profile_id=${this.profileId}`, {
                 method: 'post',
-                headers: this.#getHeaders(),
+          headers: this.#getHeaders(),
                 body
             });
 
-            if (response.ok) {
-                const responseData = await response.json();
+      if (response.ok) {
+        const responseData = await response.json();
 
                 if (responseData.status === 'done') {
-                    return { ok: true };
-                }
-            }
+          return { ok: true };
+        }
+      }
 
             await log([
                 'WhatsApp send message error',
@@ -35,20 +58,69 @@ export class WhatsAppSender {
             ], { type: 'ERROR' });
 
             throw new SenderError('Message don\'t sent to WhatsApp', response.status);
-        } catch (err) {
-            console.error(err);
+    } catch (err) {
+      console.error(err);
             void log('WhatsApp send message error');
 
-            throw new SenderError('WhatsAppSender error', err);
+      throw new SenderError('WhatsAppSender error', err);
+    }
+  }
+
+  async sendMax(phone, message) {
+    try {
+      const body = JSON.stringify({
+        recipient: phone,
+        body: message,
+      });
+
+      const response = await fetch(
+        `https://wappi.pro/maxapi/sync/message/send?profile_id=${this.maxProfileId}`,
+        {
+          method: "post",
+          headers: this.#getMaxHeaders(),
+          body,
         }
+      );
+
+      if (response.ok) {
+        const responseData = await response.json();
+
+        if (responseData.status === "done") {
+          return { ok: true };
+        }
+      }
+
+      await log(
+        [
+          "Max send message error",
+          `Response ${JSON.stringify(await response.json())}`,
+        ],
+        { type: "ERROR" }
+      );
+
+      throw new SenderError("Message wasn't sent to Max", response.status);
+    } catch (err) {
+      console.error(err);
+      void log("Max send message error");
+
+      throw new SenderError("WhatsAppSender error", err);
     }
+  }
 
-    #getHeaders() {
-        const headers = {};
+  #getHeaders() {
+    const headers = {};
 
-        headers['Content-Type'] = 'application/json';
-        headers['Authorization'] = this.token;
+    headers['Content-Type'] = 'application/json';
+    headers['Authorization'] = this.token;
 
-        return headers;
-    }
+    return headers;
+  }
+  #getMaxHeaders() {
+    const headers = {};
+
+    headers["Content-Type"] = "application/json";
+    headers["Authorization"] = this.maxToken;
+
+    return headers;
+  }
 }
