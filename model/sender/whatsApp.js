@@ -13,22 +13,23 @@ export class WhatsAppSender {
   async send(phone, message) {
     let WaError = null;
     let MaxError = null;
-    let result = null;
-
+    let WaResult = null;
+    let MaxResult = null;
+    
     try {
-      await this.sendWA(phone, message);
-    } catch (e) {
-      WaError = e;
-    }
-    try {
-      await this.sendMax(phone, message);
+      MaxResult = await this.sendMax(phone, message);
     } catch (e) {
       MaxError = e;
+    }
+    try {
+      WaResult = await this.sendWA(phone, message);
+    } catch (e) {
+      WaError = e;
     }
 
     if (WaError && MaxError) throw WaError;
 
-    return result;
+    return WaError ? MaxResult : WaResult;
   }
 
   async sendWA(phone, message) {
